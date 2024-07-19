@@ -1,55 +1,19 @@
 {
   "name": "@madiro/openmrs-esm-lime",
   "version": "1.0.0",
-  "license": "MPL-2.0",
-  "description": "An OpenMRS seed application for building microfrontends",
-  "browser": "dist/openmrs-esm-template-app.js",
-  "main": "src/index.ts",
-  "source": true,
+  "private": true,
+  "description": "LIME EMR microfrontends for the OpenMRS 3.x",
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
     "start": "openmrs develop",
-    "serve": "webpack serve --mode=development",
-    "build": "webpack --mode production",
-    "analyze": "webpack --mode=production --env analyze=true",
-    "lint": "eslint src --ext js,jsx,ts,tsx --max-warnings 0",
-    "prettier": "prettier --write \"src/**/*.{ts,tsx}\" --list-different",
-    "typescript": "tsc",
-    "test": "jest --config jest.config.js --passWithNoTests",
-    "verify": "turbo lint typescript coverage",
-    "coverage": "yarn test --coverage",
-    "prepare": "husky install",
-    "extract-translations": "i18next 'src/**/*.component.tsx' --config ./i18next-parser.config.js",
-    "test-e2e": "playwright test"
-  },
-  "browserslist": [
-    "extends browserslist-config-openmrs"
-  ],
-  "keywords": [
-    "openmrs",
-    "microfrontends"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/openmrs/openmrs-esm-template-app.git"
-  },
-  "homepage": "https://github.com/openmrs/openmrs-esm-template-app#readme",
-  "publishConfig": {
-    "access": "public"
-  },
-  "bugs": {
-    "url": "https://github.com/openmrs/openmrs-esm-template-app/issues"
-  },
-  "dependencies": {
-    "@carbon/react": "^1.33.1",
-    "lodash-es": "^4.17.21"
-  },
-  "peerDependencies": {
-    "@openmrs/esm-framework": "*",
-    "dayjs": "1.x",
-    "react": "18.x",
-    "react-i18next": "11.x",
-    "react-router-dom": "6.x",
-    "rxjs": "6.x"
+    "ci:publish": "yarn workspaces foreach --all --topological --exclude @openmrs/esm-patient-management npm publish --access public --tag latest",
+    "ci:prepublish": "yarn workspaces foreach --all --topological --exclude @openmrs/esm-patient-management npm publish --access public --tag next",
+    "release": "yarn workspaces foreach --all --topological version",
+    "verify": "turbo run lint typescript test --concurrency=1",
+    "test-e2e": "playwright test",
+    "postinstall": "husky install"
   },
   "devDependencies": {
     "@openmrs/esm-framework": "next",
@@ -101,5 +65,5 @@
     "packages/**/src/**/*.{ts,tsx}": "eslint --cache --fix --max-warnings 0",
     "*.{css,scss,ts,tsx}": "prettier --write --list-different"
   },
-  "packageManager": "yarn@4.2.2"
+  "packageManager": "yarn@4.3.1"
 }

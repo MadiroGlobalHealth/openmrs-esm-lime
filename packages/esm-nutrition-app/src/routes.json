@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json.openmrs.org/routes.schema.json",
+  "backendDependencies": {
+    "webservices.rest": "^2.2.0"
+  },
+  "extensions": [
+    {
+      "name": "patient-nutrition-summary-dashboard",
+      "component": "patientNutritionSummaryDashboardLink",
+      "slot": "patient-chart-dashboard-slot",
+      "order": 14,
+      "meta": {
+        "columns": 1,
+        "columnSpan": 1,
+        "slot": "patient-chart-nutrition-dashboard-slot",
+        "title": "Nutrition",
+        "path": "Nutrition"
+      }
+    },
+    {
+      "name": "patientNutritionDetailsWidget",
+      "component": "patientNutritionSummary",
+      "slot": "patient-chart-nutrition-dashboard-slot",
+      "meta": {
+        "columnSpan": 1
+      }
+    }
+  ]
+}

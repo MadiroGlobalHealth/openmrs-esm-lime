@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json.openmrs.org/routes.schema.json",
+  "backendDependencies": {
+    "webservices.rest": "^2.2.0"
+  },
+  "extensions": [
+    {
+      "name": "patient-mental-health-summary-dashboard",
+      "component": "patientMentalHealthSummaryDashboardLink",
+      "slot": "patient-chart-dashboard-slot",
+      "order": 14,
+      "meta": {
+        "columns": 1,
+        "columnSpan": 1,
+        "slot": "patient-chart-mental-health-dashboard-slot",
+        "title": "MentalHealth",
+        "path": "MentalHealth"
+      }
+    },
+    {
+      "name": "patientMentalHealthDetailsWidget",
+      "component": "patientMentalHealthSummary",
+      "slot": "patient-chart-mental-health-dashboard-slot",
+      "meta": {
+        "columnSpan": 1
+      }
+    }
+  ]
+}
