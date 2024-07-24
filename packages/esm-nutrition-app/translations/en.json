@@ -1,4 +1,5 @@
 {
-  "action": "Action",
-  "yes": "Yes"
+  "emptyStateText": "There are no <1>{{displayText}}</1> to display",
+  "Nutrition": "Nutrition",
+  "nutritionSummary": "Nutrition Summary"
 }
