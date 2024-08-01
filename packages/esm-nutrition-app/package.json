@@ -24,7 +24,8 @@
     "extends browserslist-config-openmrs"
   ],
   "keywords": [
-    "openmrs"
+    "openmrs",
+    "nutrition"
   ],
   "publishConfig": {
     "access": "public"
