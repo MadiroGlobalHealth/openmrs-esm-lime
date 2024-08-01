@@ -7,19 +7,15 @@ import styles from './empty-state.scss';
 
 export interface EmptyStateProps {
   displayText: string;
-  headerTitle: string;
   launchForm?(): void;
 }
 
-export const EmptyState: React.FC<EmptyStateProps> = ({ headerTitle, displayText, launchForm }) => {
+export const EmptyState: React.FC<EmptyStateProps> = ({ displayText, launchForm }) => {
   const isTablet = useLayoutType() === 'tablet';
 
   return (
     <Layer>
       <Tile className={styles.tile}>
-        <div className={isTablet ? styles.tabletHeading : styles.desktopHeading}>
-          <h4>{headerTitle}</h4>
-        </div>
         <EmptyDataIllustration />
         <p className={styles.content}>
           <Trans i18nKey="emptyStateText" displayText={displayText}>

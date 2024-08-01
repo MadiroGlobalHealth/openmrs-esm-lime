@@ -10,7 +10,7 @@ const MentalHealthSummary: React.FC<MentalHealthSummaryProps> = ({ patientUuid }
   const { t } = useTranslation();
   const MentalHealthText = t('mentalHealth', 'Mental Health');
 
-  return <EmptyState displayText={MentalHealthText} headerTitle={MentalHealthText} />;
-}
+  return <EmptyState displayText={MentalHealthText} />;
+};
 
 export default MentalHealthSummary;
