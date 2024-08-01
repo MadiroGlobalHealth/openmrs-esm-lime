@@ -10,7 +10,7 @@ const NutritionSummary: React.FC<NutritionSummaryProps> = ({ patientUuid }) => {
   const { t } = useTranslation();
   const nutritionSummaryText = t('nutritionSummary', 'Nutrition Summary');
 
-  return <EmptyState displayText={nutritionSummaryText} headerTitle={nutritionSummaryText} />;
-}
+  return <EmptyState displayText={nutritionSummaryText} />;
+};
 
 export default NutritionSummary;
