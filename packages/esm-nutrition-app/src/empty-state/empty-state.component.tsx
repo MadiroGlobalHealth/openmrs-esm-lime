@@ -16,6 +16,9 @@ export const EmptyState: React.FC<EmptyStateProps> = ({ displayText, launchForm 
   return (
     <Layer>
       <Tile className={styles.tile}>
+        <div className={isTablet ? styles.tabletHeading : styles.desktopHeading}>
+          <h4>{displayText}</h4>
+        </div>
         <EmptyDataIllustration />
         <p className={styles.content}>
           <Trans i18nKey="emptyStateText" displayText={displayText}>
