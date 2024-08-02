@@ -5,15 +5,20 @@
   },
   "extensions": [
     {
+      "name": "clinical-view-section",
+      "component": "clinicalViewPatientDivider",
+      "slot": "patient-chart-dashboard-slot",
+      "order": 20
+    },
+    {
       "name": "patient-nutrition-summary-dashboard",
       "component": "patientNutritionSummaryDashboardLink",
       "slot": "patient-chart-dashboard-slot",
-      "order": 14,
+      "order": 21,
       "meta": {
         "columns": 1,
         "columnSpan": 1,
         "slot": "patient-chart-nutrition-dashboard-slot",
-        "title": "Nutrition",
         "path": "Nutrition"
       }
     },

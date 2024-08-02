@@ -8,12 +8,11 @@
       "name": "patient-mental-health-summary-dashboard",
       "component": "patientMentalHealthSummaryDashboardLink",
       "slot": "patient-chart-dashboard-slot",
-      "order": 15,
+      "order": 22,
       "meta": {
         "columns": 1,
         "columnSpan": 1,
         "slot": "patient-chart-mental-health-dashboard-slot",
-        "title": "Mental Health",
         "path": "Mental Health"
       }
     },
