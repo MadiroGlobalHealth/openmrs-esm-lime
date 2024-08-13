@@ -1,5 +1,6 @@
 import { openmrsFetch, restBaseUrl } from '@openmrs/esm-framework';
 import useSWR from 'swr';
+import { type NutritionFetchResponse } from '../types';
 
 export const encounterRepresentation =
   'custom:(uuid,encounterDatetime,encounterType,location:(uuid,name),' +
@@ -12,10 +13,13 @@ export const nutritionEncounterTypeName = 'Nutrition';
 export function usePatientNutrition(patientUuid: string) {
   const nutritionUrl = `${restBaseUrl}/encounter?encounterType=${nutritionEncounterTypeName}&patient=${patientUuid}&v=${encounterRepresentation}`;
 
-  const { data, error, isLoading, mutate } = useSWR(nutritionUrl, openmrsFetch);
+  const { data, error, isLoading, mutate } = useSWR<{ data: NutritionFetchResponse }, Error>(
+    nutritionUrl,
+    openmrsFetch,
+  );
 
   return {
-    data,
+    nutritionData: data?.data.results,
     error,
     isLoading,
     mutate,

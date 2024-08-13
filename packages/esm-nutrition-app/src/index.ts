@@ -2,7 +2,7 @@ import { defineConfigSchema, getSyncLifecycle } from '@openmrs/esm-framework';
 import { configSchema } from './config-schema';
 import { createDashboardLink as createPatientChartDashboardLink } from '@openmrs/esm-patient-common-lib';
 import { patientChartDashboardMeta } from './dashboard.meta';
-import NutritionSummary from './nutrition-summary/nutrition-summary.component';
+import NutritionSummary from './nutrition/nutrition-summary.component';
 import ClinicalViewDivider from './clinical-views/clinical-view-divider.component';
 export const importTranslation = require.context('../translations', false, /.json$/, 'lazy');
 
