@@ -76,8 +76,6 @@ const NutritionSummary: React.FC<NutritionSummaryProps> = ({ patientUuid }) => {
   }
   const tableHeaders = nutritionData && generateHeaders(initiatlTableHeader);
 
-  console.log('tableHeaders', tableHeaders);
-
   const tableRows = React.useMemo(() => {
     return nutritionData?.map((nutritionEncounter: Encounter) => ({
       id: nutritionEncounter.uuid,
@@ -95,7 +93,6 @@ const NutritionSummary: React.FC<NutritionSummaryProps> = ({ patientUuid }) => {
       meal10: '--',
     }));
   }, [nutritionData]);
-
 
   if (isLoading) return <DataTableSkeleton role="progressbar" compact={isDesktop} zebra />;
   if (error) return <ErrorState error={error} headerTitle={nutritionSummaryText} />;
@@ -154,7 +151,6 @@ const NutritionSummary: React.FC<NutritionSummaryProps> = ({ patientUuid }) => {
       </div>
     );
   }
-
 };
 
 const FeedTableCell = ({ interpretation, children }: { interpretation: string; children: React.ReactNode }) => {
