@@ -1,26 +1,29 @@
 import { launchPatientWorkspace } from '@openmrs/esm-patient-common-lib';
+import { nutritionEncounterUuid } from '../constants';
 
-const nutritionFormName = 'Nutrition - Feeding Form';
+type FormAction = 'add' | 'view' | 'edit';
 
-export function launchNutritionFeedingForm(
+export function launchClinicalViewForm(
+  form: any,
   patientUuid: string,
-  action: 'enter' | 'edit',
-  intent?: 'enter' | 'view',
-  onFormSave?: () => void,
+  onFormSave: () => void,
+  action: FormAction = 'add',
+  title?: string,
+  workspaceWindowSize?: 'minimized' | 'maximized',
 ) {
   launchPatientWorkspace('patient-form-entry-workspace', {
-    workspaceTitle: nutritionFormName,
+    workspaceTitle: form.name,
     mutateForm: onFormSave,
     formInfo: {
-      encounterUuid: '',
-      formUuid: nutritionFormName,
+      nutritionEncounterUuid,
+      formUuid: form.name,
       patientUuid: patientUuid,
       visitTypeUuid: '',
       visitUuid: '',
       visitStartDatetime: '',
       visitStopDatetime: '',
       additionalProps: {
-        mode: action,
+        mode: action === 'add' ? 'enter' : action,
       },
     },
   });

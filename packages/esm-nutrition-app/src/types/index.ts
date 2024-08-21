@@ -20,7 +20,7 @@ export interface Encounter {
   };
   patient: Patient;
   encounterProviders: Array<EncounterProvider>;
-  obs: Array<Observation>;
+  obs: Array<Observation | FeedingObservation>;
   form: any;
 }
 
@@ -43,17 +43,39 @@ export interface EncounterProvider {
 export interface Observation {
   uuid: string;
   display: string;
+  obsDatetime: string;
   concept: {
     uuid: string;
-    display: string;
+    display?: string;
+    name?: {
+      uuid: string;
+      name: string;
+    };
   };
   obsGroup: any;
-  obsDatetime: string;
   groupMembers?: Array<Observation>;
-  value: {
-    uuid: string;
-    display: string;
-  };
+  // value: number | string | ObsValue | OpenmrsResource;
+  value: any;
   location: OpenmrsResource;
   status: string;
+  voided?: boolean;
+}
+
+export interface FeedingObservation extends Observation {
+  value: ObsValue;
+}
+
+export interface ObsValue {
+  uuid: string;
+  name: {
+    uuid: string;
+    name: string;
+  };
+  names: Array<ObsValueName>;
+}
+
+export interface ObsValueName {
+  uuid: string;
+  conceptNameType?: string;
+  name?: string;
 }
