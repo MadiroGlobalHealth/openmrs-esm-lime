@@ -34,6 +34,16 @@ import {
   mealAmountTaken7,
   mealAmountTaken8,
   mealAmountTaken9,
+  mealRemarkConcept1,
+  mealRemarkConcept10,
+  mealRemarkConcept2,
+  mealRemarkConcept3,
+  mealRemarkConcept4,
+  mealRemarkConcept5,
+  mealRemarkConcept6,
+  mealRemarkConcept7,
+  mealRemarkConcept8,
+  mealRemarkConcept9,
   nutritionFormName,
 } from '../constants';
 
@@ -85,20 +95,34 @@ const NutritionSummary: React.FC<NutritionSummaryProps> = ({ patientUuid }) => {
       mealAmountTaken10,
     ];
 
+    const mealRemarkConcepts = [
+      mealRemarkConcept1,
+      mealRemarkConcept2,
+      mealRemarkConcept3,
+      mealRemarkConcept4,
+      mealRemarkConcept5,
+      mealRemarkConcept6,
+      mealRemarkConcept7,
+      mealRemarkConcept8,
+      mealRemarkConcept9,
+      mealRemarkConcept10,
+    ];
+
     return mealAmountConcepts.map((mealAmountConcept, index) => {
       let mealNumber = (index % 10) + 1;
       const row = { id: mealAmountConcept, encounterDate: `Meal ${mealNumber}` };
-      nutritionData?.find((encounter) => {
+      nutritionData?.map((encounter) => {
         let obs = encounter.obs.find((obs) => obs.concept.uuid === mealAmountConcept);
-        row[encounter.uuid] = obs?.value?.name?.name ?? '--';
+        row[encounter.uuid] = {
+          mealTaken: obs?.value?.name?.name ?? '--',
+          mealRemark:
+            encounter.obs.find((obs) => obs.concept.uuid === mealRemarkConcepts[index])?.value?.name?.name.charAt(0) ??
+            '--',
+        };
       });
       return row;
     });
   }, [nutritionData]);
-
-  // console.log('nutritionData', nutritionData);
-  // console.log('tableHeaders', tableHeaders);
-  // console.log('tableRows', tableRows);
 
   if (isLoading) return <DataTableSkeleton role="progressbar" compact={isDesktop} zebra />;
   if (error) return <ErrorState error={error} headerTitle={nutritionSummaryText} />;
@@ -148,8 +172,12 @@ const NutritionSummary: React.FC<NutritionSummaryProps> = ({ patientUuid }) => {
                           <TableCell key={cell.id}>{cell.value?.content ?? cell.value}</TableCell>
                         ) : (
                           <>
-                            <TableCell key={cell.id}>{cell.value?.content ?? cell.value}</TableCell>
-                            <TableCell key={cell.id}>--</TableCell>
+                            <TableCell key={cell.id}>
+                              {cell.value?.content?.mealTaken ?? cell.value?.mealTaken}
+                            </TableCell>
+                            <TableCell key={cell.id}>
+                              {cell.value?.content?.mealRemark ?? cell.value?.mealRemark}
+                            </TableCell>
                           </>
                         ),
                       )}

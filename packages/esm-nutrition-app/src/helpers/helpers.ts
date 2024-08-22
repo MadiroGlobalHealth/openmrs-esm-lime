@@ -44,17 +44,6 @@ export function amountTakenValue(encounter: Encounter, amountTakenConcept: strin
   }
 }
 
-export function feedingRemark(encounter: Encounter, remarkConept: string) {
-  const obsConcept = encounter.obs.find((obs) => obs.concept.uuid === remarkConept);
-
-  if (obsConcept) {
-    let value = obsConcept.value?.name?.name;
-    return value ? value.charAt(0) : 'Missing';
-  } else {
-    return 'Missing';
-  }
-}
-
 export type ConceptNamesType = {
   name: string;
   shortName: string;
