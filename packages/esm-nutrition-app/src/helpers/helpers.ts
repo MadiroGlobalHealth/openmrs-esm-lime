@@ -55,53 +55,47 @@ export function feedingRemark(encounter: Encounter, remarkConept: string) {
   }
 }
 
-type ConceptNamesType = {
+export type ConceptNamesType = {
   name: string;
   shortName: string;
   color: string;
-}
+};
 
-export function amountTakenNames(obs: Observation) {
-  let conceptName: ConceptNamesType;
+export function amountTakenNames(obs: Observation): ConceptNamesType {
   const value = obs.value?.name?.name;
-  switch(value) {
+  switch (value) {
     case '0%':
-      conceptName = {
+      return {
         name: '0%',
         shortName: '-',
         color: 'Red',
       };
-      break;
     case '25%':
-      conceptName = {
+      return {
         name: '25%',
         shortName: '+',
         color: 'Orange',
       };
-      break;
     case '50%':
-      conceptName = {
+      return {
         name: '50%',
         shortName: '++',
         color: 'Yellow',
       };
-      break;
     case '75%':
-      conceptName = {
+      return {
         name: '75%',
         shortName: '+++',
         color: 'Blue',
       };
-      break;
     case '100%':
-      conceptName = {
+      return {
         name: '100%',
         shortName: '++++',
         color: 'Green',
       };
-      break;
     default:
-      conceptName = {
+      return {
         name: '--',
         shortName: '--',
         color: 'Grey',

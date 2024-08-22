@@ -2,15 +2,9 @@
   "add": "Add",
   "clinicalViews": "Clinical views",
   "customViews": "Clinical views tailored to patients' conditions and enrolled care programs.",
+  "date": "Date",
   "emptyStateText": "There are no <1>{{displayText}}</1> to display",
-  "meal1": "Meal 1",
-  "meal2": "Meal 2",
-  "meal3": "Meal 3",
-  "meal4": "Meal 4",
-  "meal5": "Meal 5",
-  "meal6": "Meal 6",
-  "meal7": "Meal 7",
-  "meal8": "Meal 8",
   "Nutrition": "Nutrition",
-  "nutritionSummary": "Nutrition Summary"
+  "nutritionSummary": "Nutrition Summary",
+  "record": "Record"
 }

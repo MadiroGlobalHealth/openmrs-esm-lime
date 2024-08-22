@@ -15,22 +15,27 @@ import {
   TableRow,
 } from '@carbon/react';
 import { Add } from '@carbon/react/icons';
-import {
-  CardHeader,
-  ErrorState,
-} from '@openmrs/esm-patient-common-lib';
-import {
-  formatDate,
-  useLayoutType,
-  isDesktop as desktopLayout,
-} from '@openmrs/esm-framework';
+import { CardHeader, ErrorState } from '@openmrs/esm-patient-common-lib';
+import { formatDate, useLayoutType, isDesktop as desktopLayout } from '@openmrs/esm-framework';
 import { EmptyState } from '../empty-state/empty-state.component';
 import styles from './nutrition-summary.scss';
 import { usePatientNutrition } from '../hooks/nutrition.resource';
 import { launchClinicalViewForm } from '../helpers/helpers';
 import { type Encounter } from '../types';
 import { useForm } from '../hooks/form.resource';
-import { nutritionFormName } from '../constants';
+import {
+  mealAmountTaken1,
+  mealAmountTaken10,
+  mealAmountTaken2,
+  mealAmountTaken3,
+  mealAmountTaken4,
+  mealAmountTaken5,
+  mealAmountTaken6,
+  mealAmountTaken7,
+  mealAmountTaken8,
+  mealAmountTaken9,
+  nutritionFormName,
+} from '../constants';
 
 interface NutritionSummaryProps {
   patientUuid: string;
@@ -43,73 +48,77 @@ const NutritionSummary: React.FC<NutritionSummaryProps> = ({ patientUuid }) => {
   const isTablet = layout === 'tablet';
   const isDesktop = desktopLayout(layout);
   const { form, isLoading: formIsLoading } = useForm(nutritionFormName);
-
   const { nutritionData, error, isLoading, mutate } = usePatientNutrition(patientUuid);
 
-  const launchNutritionForm = useCallback(() =>
-    launchClinicalViewForm(
-      form,
-      patientUuid,
-      mutate,
-      'add',
-    ),
-  [form, patientUuid, mutate]);
+  const launchNutritionForm = useCallback(
+    () => launchClinicalViewForm(form, patientUuid, mutate, 'add'),
+    [form, patientUuid, mutate],
+  );
 
-  let initiatlTableHeader = [
-    {
-      key: 'encounterDate',
-      header: t('date', 'Date'),
-    }
-  ];
-  console.log('nutritionData', nutritionData);
-
-  const generateHeaders = (initiatlTableHeader) => {
+  const generateHeaders = () => {
     return [
-      ...initiatlTableHeader,
-      ...nutritionData?.map((encounter: Encounter) => (
+      ...[
         {
-          key: encounter.uuid,
-          header: formatDate(new Date(encounter.encounterDatetime)),
-        }
-      ))
+          key: 'encounterDate',
+          header: t('date', 'Date'),
+        },
+      ],
+      ...(nutritionData ?? []).map((encounter: Encounter) => ({
+        key: encounter.uuid,
+        header: formatDate(new Date(encounter.encounterDatetime)),
+      })),
     ];
-  }
-  const tableHeaders = nutritionData && generateHeaders(initiatlTableHeader);
+  };
+  const tableHeaders = nutritionData && generateHeaders();
 
   const tableRows = React.useMemo(() => {
-    return nutritionData?.map((nutritionEncounter: Encounter) => ({
-      id: nutritionEncounter.uuid,
-      encounterDate: formatDate(new Date(nutritionEncounter.encounterDatetime)),
-      // meal1: nutritionEncounter.obs.find((obs) => obs.concept.uuid == amountTakenConcept).value?.name?.name ?? '--',
-      meal1: '--',
-      meal2: '--',
-      meal3: '--',
-      meal4: '--',
-      meal5: '--',
-      meal6: '--',
-      meal7: '--',
-      meal8: '--',
-      meal9: '--',
-      meal10: '--',
-    }));
+    const mealAmountConcepts = [
+      mealAmountTaken1,
+      mealAmountTaken2,
+      mealAmountTaken3,
+      mealAmountTaken4,
+      mealAmountTaken5,
+      mealAmountTaken6,
+      mealAmountTaken7,
+      mealAmountTaken8,
+      mealAmountTaken9,
+      mealAmountTaken10,
+    ];
+
+    return mealAmountConcepts.map((mealAmountConcept, index) => {
+      let mealNumber = (index % 10) + 1;
+      const row = { id: mealAmountConcept, encounterDate: `Meal ${mealNumber}` };
+      nutritionData?.find((encounter) => {
+        let obs = encounter.obs.find((obs) => obs.concept.uuid === mealAmountConcept);
+        row[encounter.uuid] = obs?.value?.name?.name ?? '--';
+      });
+      return row;
+    });
   }, [nutritionData]);
+
+  // console.log('nutritionData', nutritionData);
+  // console.log('tableHeaders', tableHeaders);
+  // console.log('tableRows', tableRows);
 
   if (isLoading) return <DataTableSkeleton role="progressbar" compact={isDesktop} zebra />;
   if (error) return <ErrorState error={error} headerTitle={nutritionSummaryText} />;
-  if (nutritionData?.length == 0) return <EmptyState displayText={nutritionSummaryText} launchForm={launchNutritionForm} />;
+  if (nutritionData?.length == 0)
+    return <EmptyState displayText={nutritionSummaryText} launchForm={launchNutritionForm} />;
   if (nutritionData?.length > 0) {
     return (
       <div className={styles.widgetCard}>
         <CardHeader title={nutritionSummaryText}>
           {formIsLoading && <SkeletonText />}
-          {form && <Button
-            kind="ghost"
-            renderIcon={(props) => <Add size={16} {...props} />}
-            iconDescription="Add Nutrition Feeding"
-            onClick={launchNutritionForm}
-          >
-            {t('add', 'Add')}
-          </Button>}
+          {form && (
+            <Button
+              kind="ghost"
+              renderIcon={(props) => <Add size={16} {...props} />}
+              iconDescription="Add Nutrition Feeding"
+              onClick={launchNutritionForm}
+            >
+              {t('add', 'Add')}
+            </Button>
+          )}
         </CardHeader>
         <DataTable rows={tableRows} headers={tableHeaders} isSortable size={isTablet ? 'lg' : 'sm'} useZebraStyles>
           {({ rows, headers, getHeaderProps, getTableProps }) => (
@@ -117,9 +126,9 @@ const NutritionSummary: React.FC<NutritionSummaryProps> = ({ patientUuid }) => {
               <Table aria-label="nutrition summary" {...getTableProps()}>
                 <TableHead>
                   <TableRow>
-                    {headers.map((header) => (
+                    {headers.map((header, index) => (
                       <TableHeader
-                        colSpan={2}
+                        colSpan={index === 0 ? 1 : 2}
                         className={classNames(styles.productiveHeading01, styles.text02, styles.widgetTableHeader)}
                         {...getHeaderProps({
                           header,
@@ -134,13 +143,16 @@ const NutritionSummary: React.FC<NutritionSummaryProps> = ({ patientUuid }) => {
                 <TableBody>
                   {rows.map((row) => (
                     <TableRow key={row.id}>
-                      {row.cells.map((cell) => (
-                        <>
-                          {/* <TableCell key={cell.id}>{cell.value?.content ?? cell.value}</TableCell> */}
-                          <TableCell key={cell.id}>--</TableCell>
-                          <TableCell key={cell.id}>--</TableCell>
-                        </>
-                      ))}
+                      {row.cells.map((cell, index) =>
+                        index === 0 ? (
+                          <TableCell key={cell.id}>{cell.value?.content ?? cell.value}</TableCell>
+                        ) : (
+                          <>
+                            <TableCell key={cell.id}>{cell.value?.content ?? cell.value}</TableCell>
+                            <TableCell key={cell.id}>--</TableCell>
+                          </>
+                        ),
+                      )}
                     </TableRow>
                   ))}
                 </TableBody>
