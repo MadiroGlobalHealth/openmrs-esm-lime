@@ -2818,6 +2818,7 @@ __metadata:
   peerDependencies:
     "@openmrs/esm-framework": 5.x
     "@openmrs/esm-patient-common-lib": 7.x
+    "@openmrs/openmrs-form-engine-lib": 2.x
     dayjs: 1.x
     react: 18.x
     react-i18next: 11.x
@@ -2837,6 +2838,7 @@ __metadata:
   peerDependencies:
     "@openmrs/esm-framework": 5.x
     "@openmrs/esm-patient-common-lib": 7.x
+    "@openmrs/openmrs-form-engine-lib": 2.x
     dayjs: 1.x
     react: 18.x
     react-i18next: 11.x

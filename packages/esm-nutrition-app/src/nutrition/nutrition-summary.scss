@@ -1,0 +1,11 @@
+@use '@carbon/layout';
+@use '@openmrs/esm-styleguide/src/vars' as *;
+
+.widgetCard {
+  border: 1px solid $ui-03;
+}
+
+.widgetTableHeader:nth-child(n+2) > span > div {
+  text-align: center;
+  flex: 1;
+}
