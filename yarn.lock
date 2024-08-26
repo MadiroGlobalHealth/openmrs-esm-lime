@@ -2968,6 +2968,7 @@ __metadata:
   resolution: "@madiro/esm-mental-health-app@workspace:packages/esm-mental-health-app"
   dependencies:
     "@carbon/react": "npm:~1.37.0"
+    "@openmrs/esm-form-engine-lib": "npm:2.1.0-pre.1376"
     lodash-es: "npm:^4.17.15"
     webpack: "npm:^5.74.0"
     yup: "npm:^0.32.11"
