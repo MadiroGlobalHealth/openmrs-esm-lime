@@ -75,7 +75,7 @@ const NutritionSummary: React.FC<NutritionSummaryProps> = ({ patientUuid }) => {
       ],
       ...(nutritionData ?? []).map((encounter: Encounter) => ({
         key: encounter.uuid,
-        header: formatDate(new Date(encounter.encounterDatetime)),
+        header: formatDate(new Date(encounter.encounterDatetime)), // TODO - format date to dd-mm-yyyy
       })),
     ];
   };
