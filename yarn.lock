@@ -1572,7 +1572,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/react@npm:>1.47.0 <1.50.0":
+"@carbon/react@npm:>1.47.0 <1.50.0, @carbon/react@npm:~1.49.0":
   version: 1.49.0
   resolution: "@carbon/react@npm:1.49.0"
   dependencies:
@@ -2967,7 +2967,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@madiro/esm-mental-health-app@workspace:packages/esm-mental-health-app"
   dependencies:
-    "@carbon/react": "npm:~1.37.0"
+    "@carbon/react": "npm:~1.49.0"
     "@openmrs/esm-form-engine-lib": "npm:2.1.0-pre.1376"
     lodash-es: "npm:^4.17.15"
     webpack: "npm:^5.74.0"
@@ -2987,7 +2987,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@madiro/esm-nutrition-app@workspace:packages/esm-nutrition-app"
   dependencies:
-    "@carbon/react": "npm:~1.37.0"
+    "@carbon/react": "npm:~1.49.0"
     "@openmrs/esm-form-engine-lib": "npm:2.1.0-pre.1376"
     lodash-es: "npm:^4.17.15"
     webpack: "npm:^5.74.0"

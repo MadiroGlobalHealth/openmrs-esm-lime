@@ -5,7 +5,18 @@
   border: 1px solid $ui-03;
 }
 
-.widgetTableHeader:nth-child(n+2) > span > div {
+.widgetTableHeader:nth-child(n+2) > div {
   text-align: center;
   flex: 1;
+}
+
+.nutritionTableCell th,
+.nutritionTableCell td {
+  border-right: 1px solid #d3d3d3;
+  text-align: center;
+}
+
+.nutritionTableCell th:last-child,
+.nutritionTableCell td:last-child {
+  border-right: none;
 }

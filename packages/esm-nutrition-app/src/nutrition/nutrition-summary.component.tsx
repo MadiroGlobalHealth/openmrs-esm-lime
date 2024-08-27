@@ -153,7 +153,11 @@ const NutritionSummary: React.FC<NutritionSummaryProps> = ({ patientUuid }) => {
         <DataTable rows={tableRows} headers={tableHeaders} isSortable size={isTablet ? 'lg' : 'sm'} useZebraStyles>
           {({ rows, headers, getHeaderProps, getTableProps }) => (
             <TableContainer>
-              <Table aria-label="nutrition summary" {...getTableProps()}>
+              <Table
+                aria-label="nutrition summary"
+                {...getTableProps()}
+                className={classNames(styles.nutritionTableCell)}
+              >
                 <TableHead>
                   <TableRow>
                     {headers.map((header, index) => (
