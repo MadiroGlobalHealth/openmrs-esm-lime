@@ -1,6 +1,5 @@
 import { launchPatientWorkspace } from '@openmrs/esm-patient-common-lib';
 import { type FormSchema } from '@openmrs/esm-form-engine-lib';
-import { nutritionEncounterUuid } from '../constants';
 import { type Observation, type Encounter } from '../types';
 
 type FormAction = 'add' | 'view' | 'edit';
@@ -10,14 +9,14 @@ export function launchClinicalViewForm(
   patientUuid: string,
   onFormSave: () => void,
   action: FormAction = 'add',
-  title?: string,
+  encounterUuid?: string,
   workspaceWindowSize?: 'minimized' | 'maximized',
 ) {
   launchPatientWorkspace('patient-form-entry-workspace', {
     workspaceTitle: form.name,
     mutateForm: onFormSave,
     formInfo: {
-      nutritionEncounterUuid,
+      encounterUuid,
       formUuid: form.name,
       patientUuid: patientUuid,
       visitTypeUuid: '',
