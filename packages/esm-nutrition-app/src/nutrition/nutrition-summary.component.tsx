@@ -1,10 +1,11 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import {
   Button,
   DataTable,
   DataTableSkeleton,
+  Link,
   SkeletonText,
   Table,
   TableBody,
@@ -65,7 +66,12 @@ const NutritionSummary: React.FC<NutritionSummaryProps> = ({ patientUuid }) => {
     [form, patientUuid, mutate],
   );
 
-  const generateHeaders = () => {
+  const editNutritionEncounterForm = (encounterUuid: string) => {
+    launchClinicalViewForm(form, patientUuid, mutate, 'edit', encounterUuid);
+  };
+
+  const tableHeaders = useMemo(() => {
+    if (!nutritionData) return [];
     return [
       ...[
         {
@@ -78,10 +84,9 @@ const NutritionSummary: React.FC<NutritionSummaryProps> = ({ patientUuid }) => {
         header: formatDate(new Date(encounter.encounterDatetime)), // TODO - format date to dd-mm-yyyy
       })),
     ];
-  };
-  const tableHeaders = nutritionData && generateHeaders();
+  }, [nutritionData, t]);
 
-  const tableRows = React.useMemo(() => {
+  const tableRows = useMemo(() => {
     const mealAmountConcepts = [
       mealAmountTaken1,
       mealAmountTaken2,
@@ -144,6 +149,7 @@ const NutritionSummary: React.FC<NutritionSummaryProps> = ({ patientUuid }) => {
             </Button>
           )}
         </CardHeader>
+
         <DataTable rows={tableRows} headers={tableHeaders} isSortable size={isTablet ? 'lg' : 'sm'} useZebraStyles>
           {({ rows, headers, getHeaderProps, getTableProps }) => (
             <TableContainer>
@@ -156,10 +162,22 @@ const NutritionSummary: React.FC<NutritionSummaryProps> = ({ patientUuid }) => {
                         className={classNames(styles.productiveHeading01, styles.text02, styles.widgetTableHeader)}
                         {...getHeaderProps({
                           header,
-                          isSortable: header.isSortable,
+                          isSortable: false,
                         })}
                       >
-                        {header.header?.content ?? header.header}
+                        {index === 0 ? (
+                          header.header?.content ?? header.header
+                        ) : (
+                          <Link
+                            style={{ cursor: 'pointer' }}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              editNutritionEncounterForm(header.key);
+                            }}
+                          >
+                            {header.header?.content ?? header.header}
+                          </Link>
+                        )}
                       </TableHeader>
                     ))}
                   </TableRow>
