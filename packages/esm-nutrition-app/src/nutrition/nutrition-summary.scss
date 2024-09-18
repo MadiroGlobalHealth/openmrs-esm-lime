@@ -1,3 +1,4 @@
+@use '@carbon/colors';
 @use '@carbon/layout';
 @use '@openmrs/esm-styleguide/src/vars' as *;
 
@@ -19,4 +20,35 @@
 .nutritionTableCell th:last-child,
 .nutritionTableCell td:last-child {
   border-right: none;
+}
+
+.mealTaken {
+  background-color: colors.$gray-20;
+  padding: layout.$spacing-01;
+  padding-inline: layout.$spacing-03;
+  text-align: center;
+
+  &[data-status='-'] {
+    background-color: colors.$red-30 !important;
+  }
+
+  &[data-status='+'] {
+    background-color: colors.$orange-30 !important;
+  }
+
+  &[data-status='++'] {
+    background-color: colors.$yellow-30 !important;
+  }
+
+  &[data-status='+++'] {
+    background-color: colors.$cyan-30 !important;
+  }
+
+  &[data-status='++++'] {
+    background-color: colors.$green-30 !important;
+  }
+
+  &[data-status=''] {
+    background-color: colors.$gray-30 !important;
+  }
 }

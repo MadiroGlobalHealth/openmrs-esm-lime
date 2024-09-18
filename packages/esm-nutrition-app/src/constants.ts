@@ -34,3 +34,29 @@ export const mealRemarkConcept7 = 'c4e3b561-a203-480c-969c-7c7f85d0a1b3';
 export const mealRemarkConcept8 = '6a36cb6c-d782-49d5-bcdc-43ac4b1b1c97';
 export const mealRemarkConcept9 = 'ad4760ec-bbbd-48f5-bef1-eeea3cf2afa6';
 export const mealRemarkConcept10 = 'e5d602d4-dc49-4c81-8fa5-e6419af12227';
+
+export const mealAmountConcepts = [
+  mealAmountTaken1,
+  mealAmountTaken2,
+  mealAmountTaken3,
+  mealAmountTaken4,
+  mealAmountTaken5,
+  mealAmountTaken6,
+  mealAmountTaken7,
+  mealAmountTaken8,
+  mealAmountTaken9,
+  mealAmountTaken10,
+];
+
+export const mealRemarkConcepts = [
+  mealRemarkConcept1,
+  mealRemarkConcept2,
+  mealRemarkConcept3,
+  mealRemarkConcept4,
+  mealRemarkConcept5,
+  mealRemarkConcept6,
+  mealRemarkConcept7,
+  mealRemarkConcept8,
+  mealRemarkConcept9,
+  mealRemarkConcept10,
+];

@@ -1,4 +1,4 @@
-import { openmrsFetch, useSession, restBaseUrl } from '@openmrs/esm-framework';
+import { openmrsFetch, restBaseUrl } from '@openmrs/esm-framework';
 
 export const hasRequiredPrivilege = async (privilege: string): Promise<boolean> => {
   const privileges = await fetchPrivileges();
