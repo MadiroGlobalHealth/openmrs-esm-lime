@@ -2,13 +2,25 @@
 @use '@carbon/layout';
 @use '@openmrs/esm-styleguide/src/vars' as *;
 
-.widgetCard {
+.nutritionWidgetCard {
   border: 1px solid $ui-03;
+  max-width: 94vw;
+}
+
+.tableContainer {
+  overflow-x: auto;
 }
 
 .widgetTableHeader:nth-child(n+2) > div {
   text-align: center;
   flex: 1;
+}
+
+.stickyTableColumn {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background-color: colors.$gray-10;
 }
 
 .nutritionTableCell th,
@@ -33,15 +45,15 @@
   }
 
   &[data-status='+'] {
-    background-color: colors.$orange-30 !important;
+    background-color: colors.$orange-20 !important;
   }
 
   &[data-status='++'] {
-    background-color: colors.$yellow-30 !important;
+    background-color: colors.$yellow-20 !important;
   }
 
   &[data-status='+++'] {
-    background-color: colors.$cyan-30 !important;
+    background-color: colors.$cyan-20 !important;
   }
 
   &[data-status='++++'] {
@@ -49,6 +61,6 @@
   }
 
   &[data-status=''] {
-    background-color: colors.$gray-30 !important;
+    background-color: colors.$gray-10 !important;
   }
 }
