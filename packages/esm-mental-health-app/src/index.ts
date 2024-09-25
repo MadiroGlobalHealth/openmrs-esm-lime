@@ -2,7 +2,7 @@ import { defineConfigSchema, getSyncLifecycle } from '@openmrs/esm-framework';
 import { configSchema } from './config-schema';
 import { createDashboardLink as createPatientChartDashboardLink } from '@openmrs/esm-patient-common-lib';
 import { patientChartDashboardMeta } from './dashboard.meta';
-import { registerExpressionHelper } from '@openmrs/openmrs-form-engine-lib';
+import { registerExpressionHelper } from '@openmrs/esm-form-engine-lib';
 import { hasRequiredPrivilege } from './utils/mental-health-form-helpers';
 
 import MentalHealthSummary from './mental-health/mental-health-summary.component';

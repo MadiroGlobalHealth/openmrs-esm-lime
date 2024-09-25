@@ -4,6 +4,8 @@ import { createDashboardLink as createPatientChartDashboardLink } from '@openmrs
 import { patientChartDashboardMeta } from './dashboard.meta';
 import NutritionSummary from './nutrition/nutrition-summary.component';
 import ClinicalViewDivider from './clinical-views/clinical-view-divider.component';
+import { registerExpressionHelper } from '@openmrs/esm-form-engine-lib';
+import { getPatientEncounterDates } from './helpers/helpers';
 export const importTranslation = require.context('../translations', false, /.json$/, 'lazy');
 
 const moduleName = '@madiro/esm-nutrition-app';
@@ -15,6 +17,8 @@ const options = {
 
 export function startupApp() {
   defineConfigSchema(moduleName, configSchema);
+
+  registerExpressionHelper('customGetEncounterDates', getPatientEncounterDates);
 }
 
 export const clinicalViewPatientDivider = getSyncLifecycle(ClinicalViewDivider, options);
