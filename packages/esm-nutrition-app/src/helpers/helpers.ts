@@ -1,5 +1,6 @@
 import { launchPatientWorkspace } from '@openmrs/esm-patient-common-lib';
 import { type FormSchema } from '@openmrs/esm-form-engine-lib';
+import { openmrsFetch, restBaseUrl } from '@openmrs/esm-framework';
 
 type FormAction = 'add' | 'view' | 'edit';
 
@@ -44,4 +45,11 @@ export function mealSymbol(value: string): string {
     default:
       return '';
   }
+}
+
+export async function getPatientEncounterDates(patientUuid: string, encounterTypeUuid: string) {
+  let params = `encounterType=${encounterTypeUuid}&patient=${patientUuid}&v=custom:(uuid,encounterDatetime)`;
+  return openmrsFetch(`${restBaseUrl}/encounter?${params}`).then(({ data }) => {
+    return data.results.map((encounter: any) => encounter.encounterDatetime);
+  });
 }
