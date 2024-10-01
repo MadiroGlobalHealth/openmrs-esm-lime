@@ -5,7 +5,7 @@ export const omrsDateFormat = 'YYYY-MM-DDTHH:mm:ss.SSSZZ';
 export const moduleName = '@madiro/esm-nutrition-app';
 
 export const datePickerPlaceHolder = 'dd/mm/yyyy';
-export const dateFormat = 'DD/MM/YYYY';
+export const dateFormat = 'YYYY-MM-DD';
 export const datePickerFormat = 'd/m/Y';
 
 export const nutritionFormName = 'Nutrition - Feeding Form';
