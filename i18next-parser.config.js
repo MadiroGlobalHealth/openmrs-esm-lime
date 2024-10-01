@@ -39,7 +39,7 @@ module.exports = {
     default: ['JavascriptLexer'],
   },
 
-  lineEnding: 'auto',
+  lineEnding: 'lf',
   // Control the line ending. See options at https://github.com/ryanve/eol
 
   locales: ['en'],
@@ -64,6 +64,10 @@ module.exports = {
 
   sort: true,
   // Whether or not to sort the catalog
+
+  skipDefaultValues: false,
+  // Whether to ignore default values
+  // You may also specify a function accepting the locale and namespace as arguments
 
   useKeysAsDefaultValue: false,
   // Whether to use the keys as the default value; ex. "Hello": "Hello", "World": "World"

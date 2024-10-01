@@ -47,7 +47,7 @@ export function mealSymbol(value: string): string {
   }
 }
 
-export async function getPatientEncounterDates(patientUuid: string, encounterTypeUuid: string) {
+export function getPatientEncounterDates(patientUuid: string, encounterTypeUuid: string) {
   let params = `encounterType=${encounterTypeUuid}&patient=${patientUuid}&v=custom:(uuid,encounterDatetime)`;
   return openmrsFetch(`${restBaseUrl}/encounter?${params}`).then(({ data }) => {
     return data.results.map((encounter: any) => encounter.encounterDatetime);

@@ -1,5 +1,5 @@
 module.exports = {
-  contextSeparator: '_',
+  contextSeparator: false,
   // Key separator used in your translation keys
 
   createOldCatalogs: false,
@@ -8,7 +8,7 @@ module.exports = {
   defaultNamespace: 'translations',
   // Default namespace used in your i18next config
 
-  defaultValue: '',
+  defaultValue: (_, __, key) => key,
   // Default value to give to empty keys
   // You may also specify a function accepting the locale, namespace, and key as arguments
 
