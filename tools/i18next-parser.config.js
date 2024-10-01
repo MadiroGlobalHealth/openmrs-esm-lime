@@ -1,5 +1,5 @@
 module.exports = {
-  contextSeparator: false,
+  contextSeparator: '_',
   // Key separator used in your translation keys
 
   createOldCatalogs: false,
