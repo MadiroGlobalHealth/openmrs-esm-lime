@@ -23,7 +23,7 @@ import { usePatientNutrition } from '../hooks/nutrition.resource';
 import { launchClinicalViewForm, mealSymbol } from '../helpers/helpers';
 import { type Encounter } from '../types';
 import { useForm } from '../hooks/form.resource';
-import { mealAmountConcepts, mealRemarkConcepts, nutritionFormUuid } from '../constants';
+import { mealAmountConcepts, mealRemarkConcepts, nutritionFormName } from '../constants';
 import styles from './nutrition-summary.scss';
 
 interface NutritionSummaryProps {
@@ -36,7 +36,7 @@ const NutritionSummary: React.FC<NutritionSummaryProps> = ({ patientUuid }) => {
   const layout = useLayoutType();
   const isTablet = layout === 'tablet';
   const isDesktop = desktopLayout(layout);
-  const { form, isLoading: formIsLoading } = useForm(nutritionFormUuid);
+  const { form, isLoading: formIsLoading } = useForm(nutritionFormName);
   const { nutritionData, error, isLoading, mutate } = usePatientNutrition(patientUuid);
 
   const launchNutritionForm = useCallback(
@@ -134,7 +134,7 @@ const NutritionSummary: React.FC<NutritionSummaryProps> = ({ patientUuid }) => {
                           })}
                         >
                           {index === 0 ? (
-                            header.header?.content ?? header.header
+                            (header.header?.content ?? header.header)
                           ) : (
                             <Link
                               style={{ cursor: 'pointer' }}
