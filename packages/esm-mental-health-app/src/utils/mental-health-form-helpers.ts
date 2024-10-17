@@ -12,3 +12,10 @@ async function fetchPrivileges(): Promise<Array<string>> {
   const data = await response.json();
   return data?.user?.privileges?.map((p) => p.display) || [];
 }
+
+export function getTotalPatientEncounters(patientUuid: string, encounterTypeUuid: string) {
+  let params = `encounterType=${encounterTypeUuid}&patient=${patientUuid}`;
+  return openmrsFetch(`${restBaseUrl}/encounter?${params}`).then(({ data }) => {
+    return data.results.length;
+  });
+}
