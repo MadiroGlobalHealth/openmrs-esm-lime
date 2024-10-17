@@ -13,9 +13,12 @@ async function fetchPrivileges(): Promise<Array<string>> {
   return data?.user?.privileges?.map((p) => p.display) || [];
 }
 
-export function getTotalPatientEncounters(patientUuid: string, encounterTypeUuid: string) {
+export function getTotalPatientEncounters(patientUuid: string, encounterTypeUuid: string, formName?: string) {
   let params = `encounterType=${encounterTypeUuid}&patient=${patientUuid}`;
   return openmrsFetch(`${restBaseUrl}/encounter?${params}`).then(({ data }) => {
+    if (formName) {
+      return data.results.filter((encounter: any) => encounter.form?.name === formName).length;
+    }
     return data.results.length;
   });
 }
