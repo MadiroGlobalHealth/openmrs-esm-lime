@@ -52,6 +52,9 @@ export function mealSymbol(value: string): string {
 export function getPatientEncounterDates(patientUuid: string, encounterTypeUuid: string) {
   let params = `encounterType=${encounterTypeUuid}&patient=${patientUuid}&v=custom:(uuid,encounterDatetime)`;
   return openmrsFetch(`${restBaseUrl}/encounter?${params}`).then(({ data }) => {
+    if (data.results.length === 0) {
+      return [];
+    }
     return data.results.map((encounter: any) => dayjs(encounter.encounterDatetime).format(dateFormat));
   });
 }
