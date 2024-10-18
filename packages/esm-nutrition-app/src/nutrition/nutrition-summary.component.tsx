@@ -20,7 +20,7 @@ import { CardHeader, ErrorState } from '@openmrs/esm-patient-common-lib';
 import { formatDate, useLayoutType, isDesktop as desktopLayout } from '@openmrs/esm-framework';
 import { EmptyState } from '../empty-state/empty-state.component';
 import { usePatientNutrition } from '../hooks/nutrition.resource';
-import { launchClinicalViewForm, mealSymbol } from '../helpers/helpers';
+import { launchClinicalViewForm, mealSymbol } from '../utils/helpers';
 import { type Encounter } from '../types';
 import { useForm } from '../hooks/form.resource';
 import { mealAmountConcepts, mealRemarkConcepts, nutritionFormName } from '../constants';
