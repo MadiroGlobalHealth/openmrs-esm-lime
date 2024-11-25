@@ -1,4 +1,4 @@
-import { openmrsFetch, restBaseUrl } from '@openmrs/esm-framework';
+import { fhirBaseUrl, openmrsFetch, restBaseUrl } from '@openmrs/esm-framework';
 
 export const hasRequiredPrivilege = async (privilege: string): Promise<boolean> => {
   const privileges = await fetchPrivileges();
@@ -20,5 +20,26 @@ export function getTotalPatientEncounters(patientUuid: string, encounterTypeUuid
       return data.results.filter((encounter: any) => encounter.form?.name === formName).length;
     }
     return data.results.length;
+  });
+}
+
+export function getLatestObs(patientUuid: string, conceptUuid: string, encounterTypeUuid?: string) {
+  let params = `patient=${patientUuid}&code=${conceptUuid}${
+    encounterTypeUuid ? `&encounter.type=${encounterTypeUuid}` : ''
+  }`;
+  // the latest obs
+  params += '&_sort=-date&_count=1';
+  return openmrsFetch(`${fhirBaseUrl}/Observation?${params}`).then(({ data }) => {
+    return data.entry?.length ? data.entry[0].resource : null;
+  });
+}
+
+export function getLatestOpenmrsObs(patientUuid: string, conceptUuid: string, encounterTypeUuid?: string) {
+  return getLatestObs(patientUuid, conceptUuid, encounterTypeUuid).then((obs) => {
+    return {
+      value: {
+        uuid: obs?.valueCodeableConcept?.coding[0]?.code,
+      },
+    };
   });
 }
