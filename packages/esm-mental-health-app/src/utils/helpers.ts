@@ -36,10 +36,6 @@ export function getLatestObs(patientUuid: string, conceptUuid: string, encounter
 
 export function getLatestOpenmrsObs(patientUuid: string, conceptUuid: string, encounterTypeUuid?: string) {
   return getLatestObs(patientUuid, conceptUuid, encounterTypeUuid).then((obs) => {
-    return {
-      value: {
-        uuid: obs?.valueCodeableConcept?.coding[0]?.code,
-      },
-    };
+    return obs?.valueCodeableConcept?.coding[0]?.code;
   });
 }
