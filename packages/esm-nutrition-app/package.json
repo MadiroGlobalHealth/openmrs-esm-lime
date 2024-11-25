@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "@carbon/react": "~1.49.0",
-    "@openmrs/esm-form-engine-lib": "2.1.0-pre.1466",
+    "@openmrs/esm-form-engine-lib": "2.1.0-pre.1581",
     "lodash-es": "^4.17.15",
     "yup": "^0.32.11"
   },
