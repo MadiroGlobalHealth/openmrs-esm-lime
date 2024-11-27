@@ -3,14 +3,32 @@
   "backendDependencies": {
     "webservices.rest": "^2.2.0"
   },
-  "pages": [
-    {
-      "component": "emptyComponent",
-      "route": true,
-      "online": true,
-      "offline": true
-    }
-  ],
   "extensions": [
+    {
+      "name": "clinical-view-section",
+      "component": "clinicalViewPatientDivider",
+      "slot": "patient-chart-dashboard-slot",
+      "order": 20
+    },
+    {
+      "name": "patient-nutrition-summary-dashboard",
+      "component": "patientNutritionSummaryDashboardLink",
+      "slot": "patient-chart-dashboard-slot",
+      "order": 21,
+      "meta": {
+        "columns": 1,
+        "columnSpan": 1,
+        "slot": "patient-chart-nutrition-dashboard-slot",
+        "path": "Nutrition"
+      }
+    },
+    {
+      "name": "patientNutritionDetailsWidget",
+      "component": "patientNutritionSummary",
+      "slot": "patient-chart-nutrition-dashboard-slot",
+      "meta": {
+        "columnSpan": 1
+      }
+    }
   ]
 }

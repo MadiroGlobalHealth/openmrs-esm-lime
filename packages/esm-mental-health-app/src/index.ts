@@ -5,7 +5,6 @@ import { patientChartDashboardMeta } from './dashboard.meta';
 import { registerExpressionHelper } from '@openmrs/esm-form-engine-lib/';
 import { getLatestOpenmrsObs, getTotalPatientEncounters, hasRequiredPrivilege } from './utils/helpers';
 import MentalHealthSummary from './mental-health/mental-health-summary.component';
-import { type FunctionComponent } from 'react';
 
 export const importTranslation = require.context('../translations', false, /.json$/, 'lazy');
 
@@ -30,9 +29,3 @@ export const patientMentalHealthSummaryDashboardLink = getSyncLifecycle(
 );
 
 export const patientMentalHealthSummary = getSyncLifecycle(MentalHealthSummary, options);
-
-const EmptyFragment: FunctionComponent = () => {
-  return null;
-};
-
-export const emptyComponent = getSyncLifecycle(EmptyFragment, options);

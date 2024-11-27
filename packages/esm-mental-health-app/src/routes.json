@@ -3,14 +3,26 @@
   "backendDependencies": {
     "webservices.rest": "^2.2.0"
   },
-  "pages": [
-    {
-      "component": "emptyComponent",
-      "route": true,
-      "online": true,
-      "offline": true
-    }
-  ],
   "extensions": [
+    {
+      "name": "patient-mental-health-summary-dashboard",
+      "component": "patientMentalHealthSummaryDashboardLink",
+      "slot": "patient-chart-dashboard-slot",
+      "order": 22,
+      "meta": {
+        "columns": 1,
+        "columnSpan": 1,
+        "slot": "patient-chart-mental-health-dashboard-slot",
+        "path": "Mental Health"
+      }
+    },
+    {
+      "name": "patientMentalHealthDetailsWidget",
+      "component": "patientMentalHealthSummary",
+      "slot": "patient-chart-mental-health-dashboard-slot",
+      "meta": {
+        "columnSpan": 1
+      }
+    }
   ]
 }
