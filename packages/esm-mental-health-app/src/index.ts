@@ -20,7 +20,7 @@ export function startupApp() {
 
   registerExpressionHelper('customHasRequiredPrivilege', hasRequiredPrivilege);
   registerExpressionHelper('customGetTotalPatientEncounters', getTotalPatientEncounters);
-  registerExpressionHelper('getLatestOpenmrsObs', getLatestOpenmrsObs);
+  registerExpressionHelper('customGetLatestOpenmrsObs', getLatestOpenmrsObs);
 }
 
 // t('mentalHealth', 'Mental Health')
