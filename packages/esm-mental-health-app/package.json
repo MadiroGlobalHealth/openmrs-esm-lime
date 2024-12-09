@@ -6,7 +6,7 @@
   "main": "src/index.ts",
   "source": true,
   "license": "MPL-2.0",
-  "homepage": "https://github.com/Madiro-org/openmrs-esm-lime#readme",
+  "homepage": "https://github.com/MadiroGlobalHealth/openmrs-esm-lime#readme",
   "scripts": {
     "start": "openmrs develop",
     "serve": "webpack serve --mode=development",
@@ -32,14 +32,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Madiro-org/openmrs-esm-lime.git"
+    "url": "git+https://github.com/MadiroGlobalHealth/openmrs-esm-lime.git"
   },
   "bugs": {
-    "url": "https://github.com/Madiro-org/openmrs-esm-lime/issues"
+    "url": "https://github.com/MadiroGlobalHealth/openmrs-esm-lime/issues"
   },
   "dependencies": {
     "@carbon/react": "~1.49.0",
-    "@openmrs/esm-form-engine-lib": "2.1.0-pre.1581",
+    "@openmrs/esm-form-engine-lib": "next",
     "lodash-es": "^4.17.15",
     "yup": "^0.32.11"
   },
