@@ -2809,7 +2809,9 @@ __metadata:
     webpack: "npm:^5.74.0"
     yup: "npm:^0.32.11"
   peerDependencies:
+    "@carbon/react": 6.x
     dayjs: 1.x
+    i18next: 21.x
     react: 18.x
     react-i18next: 11.x
     react-router-dom: 6.x
@@ -2825,7 +2827,9 @@ __metadata:
     webpack: "npm:^5.74.0"
     yup: "npm:^0.32.11"
   peerDependencies:
+    "@carbon/react": 6.x
     dayjs: 1.x
+    i18next: 21.x
     react: 18.x
     react-i18next: 11.x
     react-router-dom: 6.x
