@@ -2980,6 +2980,7 @@ __metadata:
     swr: "npm:^2.2.4"
     turbo: "npm:^2.5.0"
     typescript: "npm:^4.9.5"
+    webpack: "npm:^5.74.0"
     webpack-cli: "npm:^4.10.0"
     webpack-dev-server: "npm:^4.15.1"
   languageName: unknown
@@ -3568,8 +3569,8 @@ __metadata:
   linkType: hard
 
 "@openmrs/esm-patient-common-lib@npm:next":
-  version: 9.2.3-pre.7348
-  resolution: "@openmrs/esm-patient-common-lib@npm:9.2.3-pre.7348"
+  version: 9.2.3-pre.7424
+  resolution: "@openmrs/esm-patient-common-lib@npm:9.2.3-pre.7424"
   dependencies:
     "@carbon/react": "npm:^1.76.0"
     lodash-es: "npm:^4.17.21"
@@ -3578,7 +3579,7 @@ __metadata:
     "@openmrs/esm-framework": 6.x
     react: 18.x
     single-spa: 6.x
-  checksum: 10c0/26ac4975a9e57b7fe4e8a679dff681eff3103ffc5ba999aaa0adc18eaa7fa3f14b3c506d6b6bc59073da344f50902eb003748ec0bf073d6191f12af2d47e7b00
+  checksum: 10c0/d35e1a40181f6cc9c230eb43f46a1b67410ab7226fdd1ae8d71a5dba91d8d6eb23eed2716cf25eb9b3bc472a9db02bd56a34bbcda118262d197fc340bc48fda4
   languageName: node
   linkType: hard
 
@@ -20335,7 +20336,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack-cli@npm:^4.10.0":
+"webpack-cli@npm:4.10.0":
   version: 4.10.0
   resolution: "webpack-cli@npm:4.10.0"
   dependencies:
@@ -20476,43 +20477,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:^5.88.0":
-  version: 5.99.5
-  resolution: "webpack@npm:5.99.5"
-  dependencies:
-    "@types/eslint-scope": "npm:^3.7.7"
-    "@types/estree": "npm:^1.0.6"
-    "@webassemblyjs/ast": "npm:^1.14.1"
-    "@webassemblyjs/wasm-edit": "npm:^1.14.1"
-    "@webassemblyjs/wasm-parser": "npm:^1.14.1"
-    acorn: "npm:^8.14.0"
-    browserslist: "npm:^4.24.0"
-    chrome-trace-event: "npm:^1.0.2"
-    enhanced-resolve: "npm:^5.17.1"
-    es-module-lexer: "npm:^1.2.1"
-    eslint-scope: "npm:5.1.1"
-    events: "npm:^3.2.0"
-    glob-to-regexp: "npm:^0.4.1"
-    graceful-fs: "npm:^4.2.11"
-    json-parse-even-better-errors: "npm:^2.3.1"
-    loader-runner: "npm:^4.2.0"
-    mime-types: "npm:^2.1.27"
-    neo-async: "npm:^2.6.2"
-    schema-utils: "npm:^4.3.0"
-    tapable: "npm:^2.1.1"
-    terser-webpack-plugin: "npm:^5.3.11"
-    watchpack: "npm:^2.4.1"
-    webpack-sources: "npm:^3.2.3"
-  peerDependenciesMeta:
-    webpack-cli:
-      optional: true
-  bin:
-    webpack: bin/webpack.js
-  checksum: 10c0/8f5ebea5e2ae7449774d535862348ee564c100350643e4bdd0683fa07eabc058e88a07b7af7176ee4038d03e5172001daf65c16acebf90bc7ba48c08e25e6792
-  languageName: node
-  linkType: hard
-
-"webpack@npm:^5.94.0":
+"webpack@npm:^5.74.0, webpack@npm:^5.88.0, webpack@npm:^5.94.0":
   version: 5.99.6
   resolution: "webpack@npm:5.99.6"
   dependencies:
