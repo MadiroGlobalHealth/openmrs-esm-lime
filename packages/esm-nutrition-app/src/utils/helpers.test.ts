@@ -1,11 +1,10 @@
-import { launchClinicalViewForm, mealSymbol, getPatientEncounterDates } from './helpers';
-import { launchPatientWorkspace } from '@openmrs/esm-patient-common-lib';
-import { openmrsFetch } from '@openmrs/esm-framework';
+import { launchWorkspace, openmrsFetch } from '@openmrs/esm-framework';
 import dayjs from 'dayjs';
+import { launchClinicalViewForm, mealSymbol, getPatientEncounterDates } from './helpers';
 import { dateFormat } from '../constants';
 
 jest.mock('@openmrs/esm-patient-common-lib', () => ({
-  launchPatientWorkspace: jest.fn(),
+  launchWorkspace: jest.fn(),
 }));
 
 jest.mock('@openmrs/esm-framework', () => ({
@@ -14,7 +13,7 @@ jest.mock('@openmrs/esm-framework', () => ({
 }));
 
 describe('launchClinicalViewForm', () => {
-  it('should call launchPatientWorkspace with correct parameters', () => {
+  it('should call launchWorkspace with correct parameters', () => {
     const form = { name: 'Test Form' } as any;
     const patientUuid = 'patient-uuid';
     const onFormSave = jest.fn();
@@ -22,7 +21,7 @@ describe('launchClinicalViewForm', () => {
 
     launchClinicalViewForm(form, patientUuid, onFormSave, action);
 
-    expect(launchPatientWorkspace).toHaveBeenCalledWith('patient-form-entry-workspace', {
+    expect(launchWorkspace).toHaveBeenCalledWith('patient-form-entry-workspace', {
       workspaceTitle: form.name,
       mutateForm: onFormSave,
       formInfo: {
@@ -44,10 +43,10 @@ describe('launchClinicalViewForm', () => {
 describe('mealSymbol', () => {
   it.each([
     ['0%', '-'],
-    ['25%', '+'],
-    ['50%', '++'],
-    ['75%', '+++'],
-    ['100%', '++++'],
+    ['25%', 'X'],
+    ['50%', 'XX'],
+    ['75%', 'XXX'],
+    ['100%', 'XXXX'],
     ['unknown', ''],
   ])('should return correct symbol for %s', (input, expected) => {
     expect(mealSymbol(input)).toBe(expected);

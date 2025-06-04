@@ -44,19 +44,19 @@
     background-color: colors.$red-30 !important;
   }
 
-  &[data-status='+'] {
+  &[data-status='X'] {
     background-color: colors.$orange-20 !important;
   }
 
-  &[data-status='++'] {
+  &[data-status='XX'] {
     background-color: colors.$yellow-20 !important;
   }
 
-  &[data-status='+++'] {
+  &[data-status='XXX'] {
     background-color: colors.$cyan-20 !important;
   }
 
-  &[data-status='++++'] {
+  &[data-status='XXXX'] {
     background-color: colors.$green-30 !important;
   }
 
