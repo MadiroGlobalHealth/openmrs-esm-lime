@@ -37,13 +37,13 @@ export function mealSymbol(value: string): string {
     case '0%':
       return '-';
     case '25%':
-      return '+';
+      return 'X';
     case '50%':
-      return '++';
+      return 'XX';
     case '75%':
-      return '+++';
+      return 'XXX';
     case '100%':
-      return '++++';
+      return 'XXXX';
     default:
       return '';
   }
