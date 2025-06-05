@@ -6,9 +6,9 @@ const path = require('path');
 
 module.exports = {
   transform: {
-    '^.+\\.(j|t)sx?$': '@swc/jest',
+    '^.+\\.[jt]sx?$': '@swc/jest',
   },
-  transformIgnorePatterns: ['/node_modules/(?!@openmrs)'],
+  transformIgnorePatterns: ['/node_modules/(?!@openmrs|.+\\.pnp\\.[^\\/]+$)'],
   moduleDirectories: ['node_modules', '__mocks__', 'tools', __dirname],
   moduleNameMapper: {
     '\\.(s?css)$': 'identity-obj-proxy',

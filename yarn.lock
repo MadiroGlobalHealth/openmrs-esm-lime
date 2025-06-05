@@ -2930,7 +2930,7 @@ __metadata:
     yup: "npm:^0.32.11"
   peerDependencies:
     "@openmrs/esm-framework": 6.x
-    "@openmrs/esm-patient-common-lib": 9.x
+    "@openmrs/esm-patient-common-lib": 10.x
     dayjs: 1.x
     react: 18.x
     react-i18next: 11.x
