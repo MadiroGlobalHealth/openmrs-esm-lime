@@ -26,11 +26,5 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "target": "esnext",
-  },
-  "exclude": [
-    "node_modules",
-    // Explicitly exclude source directories from problematic dependencies
-    "../../node_modules/@openmrs/esm-framework/src/**/*",
-    "../../node_modules/@openmrs/esm-styleguide/src/**/*"
-  ]
+  }
 }
