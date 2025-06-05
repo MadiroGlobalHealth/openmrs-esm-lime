@@ -1,6 +1,6 @@
-import { launchPatientWorkspace } from '@openmrs/esm-patient-common-lib';
 import { type FormSchema } from '@openmrs/esm-form-engine-lib';
 import { openmrsFetch, restBaseUrl } from '@openmrs/esm-framework';
+import { launchPatientWorkspace } from '@openmrs/esm-patient-common-lib';
 import dayjs from 'dayjs';
 import { dateFormat } from '../constants';
 
@@ -37,13 +37,13 @@ export function mealSymbol(value: string): string {
     case '0%':
       return '-';
     case '25%':
-      return '+';
+      return 'X';
     case '50%':
-      return '++';
+      return 'XX';
     case '75%':
-      return '+++';
+      return 'XXX';
     case '100%':
-      return '++++';
+      return 'XXXX';
     default:
       return '';
   }

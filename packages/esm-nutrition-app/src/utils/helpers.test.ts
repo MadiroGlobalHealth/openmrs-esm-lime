@@ -1,7 +1,7 @@
-import { launchClinicalViewForm, mealSymbol, getPatientEncounterDates } from './helpers';
-import { launchPatientWorkspace } from '@openmrs/esm-patient-common-lib';
 import { openmrsFetch } from '@openmrs/esm-framework';
+import { launchPatientWorkspace } from '@openmrs/esm-patient-common-lib';
 import dayjs from 'dayjs';
+import { launchClinicalViewForm, mealSymbol, getPatientEncounterDates } from './helpers';
 import { dateFormat } from '../constants';
 
 jest.mock('@openmrs/esm-patient-common-lib', () => ({
@@ -44,10 +44,10 @@ describe('launchClinicalViewForm', () => {
 describe('mealSymbol', () => {
   it.each([
     ['0%', '-'],
-    ['25%', '+'],
-    ['50%', '++'],
-    ['75%', '+++'],
-    ['100%', '++++'],
+    ['25%', 'X'],
+    ['50%', 'XX'],
+    ['75%', 'XXX'],
+    ['100%', 'XXXX'],
     ['unknown', ''],
   ])('should return correct symbol for %s', (input, expected) => {
     expect(mealSymbol(input)).toBe(expected);
