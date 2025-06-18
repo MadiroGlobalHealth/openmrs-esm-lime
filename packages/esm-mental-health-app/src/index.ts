@@ -3,7 +3,7 @@ import { configSchema } from './config-schema';
 import { createDashboardLink as createPatientChartDashboardLink } from '@openmrs/esm-patient-common-lib';
 import { patientChartDashboardMeta } from './dashboard.meta';
 import { registerExpressionHelper } from '@openmrs/esm-form-engine-lib/';
-import { getLatestOpenmrsObs, getTotalPatientEncounters, hasRequiredPrivilege } from './utils/helpers';
+import { getLatestOpenmrsObs, getTotalPatientEncounters, useHasRequiredPrivilege } from './utils/helpers';
 import MentalHealthSummary from './mental-health/mental-health-summary.component';
 
 export const importTranslation = require.context('../translations', false, /.json$/, 'lazy');
@@ -17,7 +17,7 @@ const options = {
 
 export function startupApp() {
   defineConfigSchema(moduleName, configSchema);
-  registerExpressionHelper('customHasRequiredPrivilege', hasRequiredPrivilege);
+  registerExpressionHelper('customHasRequiredPrivilege', useHasRequiredPrivilege);
   registerExpressionHelper('customGetTotalPatientEncounters', getTotalPatientEncounters);
   registerExpressionHelper('getLatestOpenmrsObs', getLatestOpenmrsObs);
 }
