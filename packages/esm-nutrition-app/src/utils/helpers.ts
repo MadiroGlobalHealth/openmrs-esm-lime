@@ -1,6 +1,5 @@
+import { launchWorkspace, openmrsFetch, restBaseUrl } from '@openmrs/esm-framework';
 import { type FormSchema } from '@openmrs/esm-form-engine-lib';
-import { openmrsFetch, restBaseUrl } from '@openmrs/esm-framework';
-import { launchPatientWorkspace } from '@openmrs/esm-patient-common-lib';
 import dayjs from 'dayjs';
 import { dateFormat } from '../constants';
 
@@ -14,7 +13,7 @@ export function launchClinicalViewForm(
   encounterUuid?: string,
   workspaceWindowSize?: 'minimized' | 'maximized',
 ) {
-  launchPatientWorkspace('patient-form-entry-workspace', {
+  launchWorkspace('patient-form-entry-workspace', {
     workspaceTitle: form.name,
     mutateForm: onFormSave,
     formInfo: {

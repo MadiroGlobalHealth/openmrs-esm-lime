@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Information } from '@carbon/react/icons';
-import { Tooltip } from '@carbon/react';
 import { ExtensionSlot } from '@openmrs/esm-framework';
 import { type DashboardGroupExtensionProps, registerNavGroup } from '@openmrs/esm-patient-common-lib';
+import { useTranslation } from 'react-i18next';
+import { Tooltip } from '@carbon/react';
+import { Information } from '@carbon/react/icons';
 import styles from './clinical-view-divider.scss';
 
 export const ClinicalViewDivider: React.FC<DashboardGroupExtensionProps> = ({ title, basePath }) => {
