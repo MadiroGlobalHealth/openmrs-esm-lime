@@ -1,10 +1,13 @@
-import { fhirBaseUrl, openmrsFetch, restBaseUrl, userHasAccess, useSession } from '@openmrs/esm-framework';
+import { fhirBaseUrl, openmrsFetch, restBaseUrl, userHasAccess } from '@openmrs/esm-framework';
 
-export function useHasRequiredPrivilege(privilege: string): boolean {
-  const session = useSession();
+export const useHasRequiredPrivilege = async (privilege: string): Promise<boolean> => {
+  const response = await openmrsFetch(`${restBaseUrl}/session`, {
+    method: 'GET',
+  });
+  const session = await response.json();
   const hasPrivilege = userHasAccess(privilege, session?.user);
   return !!hasPrivilege;
-}
+};
 
 export function getTotalPatientEncounters(patientUuid: string, encounterTypeUuid: string, formName?: string) {
   let params = `encounterType=${encounterTypeUuid}&patient=${patientUuid}`;
