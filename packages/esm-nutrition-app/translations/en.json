@@ -1,7 +1,5 @@
 {
   "add": "Add",
-  "clinicalViews": "Clinical views",
-  "customViews": "Clinical views tailored to patients' conditions and enrolled care programs.",
   "date": "Date",
   "emptyStateText": "There are no <1>{{displayText}}</1> to display",
   "Nutrition": "Nutrition",
