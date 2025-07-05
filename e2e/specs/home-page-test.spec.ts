@@ -7,5 +7,5 @@ import { expect } from '@playwright/test';
 test('Home Page test', async ({ page }) => {
   const homePage = new HomePage(page);
   await homePage.goto();
-  await expect(homePage.page.getByRole('link', { name: 'Home' })).toBeVisible();
+  await expect(homePage.page.getByRole('link', { name: 'Service queues' })).toBeVisible();
 });
