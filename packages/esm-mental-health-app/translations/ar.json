@@ -1,4 +1,6 @@
 {
   "action": "الإجراء",
-  "actions": "الإجراءات"
+  "actions": "الإجراءات",
+  "emptyStateText": "لا توجد {{displayText}} لعرضها",
+  "Mental Health": "الصحة النفسية"
 }

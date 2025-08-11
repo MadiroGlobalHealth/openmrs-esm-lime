@@ -1,8 +1,9 @@
 {
-  "add": "Add",
-  "date": "Date",
-  "emptyStateText": "There are no <1>{{displayText}}</1> to display",
+  "Add": "Add",
+  "Date": "Date",
+  "emptyStateText": "There are no {{displayText}} to display",
+  "Meal": "Meal",
   "Nutrition": "Nutrition",
-  "nutritionSummary": "Nutrition Summary",
-  "record": "Record"
+  "Nutrition Summary": "Nutrition Summary",
+  "Record": "record"
 }

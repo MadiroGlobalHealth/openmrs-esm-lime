@@ -22,7 +22,7 @@ export function startupApp() {
   registerExpressionHelper('getLatestOpenmrsObs', getLatestOpenmrsObs);
 }
 
-// t('mentalHealth', 'Mental Health')
+// t('Mental Health')
 export const patientMentalHealthSummaryDashboardLink = getSyncLifecycle(
   createPatientChartDashboardLink({ ...patientChartDashboardMeta, moduleName }),
   options,
