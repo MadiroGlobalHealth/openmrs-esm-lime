@@ -1,4 +1,10 @@
 {
+  "Add": "إضافة",
   "action": "الإجراء",
-  "actions": "الإجراءات"
+  "actions": "الإجراءات",
+  "Date": "التاريخ",
+  "Meal": "الوجبة",
+  "Nutrition": "التغذية",
+  "Nutrition Summary": "ملخص التغذية",
+  "Record": "تسجيل"
 }

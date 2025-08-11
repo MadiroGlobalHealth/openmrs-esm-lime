@@ -32,7 +32,7 @@ interface NutritionSummaryProps {
 
 const NutritionSummary: React.FC<NutritionSummaryProps> = ({ patientUuid }) => {
   const { t } = useTranslation();
-  const nutritionSummaryText = t('nutritionSummary', 'Nutrition Summary');
+  const nutritionSummaryText = t('Nutrition Summary', 'Nutrition Summary');
   const layout = useLayoutType();
   const isTablet = layout === 'tablet';
   const isDesktop = desktopLayout(layout);
@@ -54,7 +54,7 @@ const NutritionSummary: React.FC<NutritionSummaryProps> = ({ patientUuid }) => {
       ...[
         {
           key: 'encounterDate',
-          header: t('date', 'Date'),
+          header: t('Date'),
         },
       ],
       ...(nutritionData ?? []).map((encounter: Encounter) => ({
@@ -79,13 +79,13 @@ const NutritionSummary: React.FC<NutritionSummaryProps> = ({ patientUuid }) => {
   const tableRows = useMemo(() => {
     return mealAmountConcepts.map((mealAmountConcept, index) => {
       let mealNumber = (index % 10) + 1;
-      const row = { id: mealAmountConcept, encounterDate: `Meal ${mealNumber}` };
+      const row = { id: mealAmountConcept, encounterDate: `${t('Meal')} ${mealNumber}` };
       nutritionData?.forEach((encounter) => {
         row[encounter.uuid] = getRowData(encounter, mealAmountConcept, index);
       });
       return row;
     });
-  }, [nutritionData]);
+  }, [nutritionData, t]);
 
   if (isLoading) return <DataTableSkeleton role="progressbar" compact={isDesktop} zebra />;
   if (error) return <ErrorState error={error} headerTitle={nutritionSummaryText} />;
@@ -103,7 +103,7 @@ const NutritionSummary: React.FC<NutritionSummaryProps> = ({ patientUuid }) => {
               iconDescription="Add Nutrition Feeding"
               onClick={launchNutritionForm}
             >
-              {t('add', 'Add')}
+              {t('Add')}
             </Button>
           )}
         </CardHeader>

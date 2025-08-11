@@ -8,7 +8,7 @@ interface MentalHealthSummaryProps {
 
 const MentalHealthSummary: React.FC<MentalHealthSummaryProps> = ({ patientUuid }) => {
   const { t } = useTranslation();
-  const MentalHealthText = t('mentalHealth', 'Mental Health');
+  const MentalHealthText = t('Mental Health');
 
   return <EmptyState displayText={MentalHealthText} />;
 };
