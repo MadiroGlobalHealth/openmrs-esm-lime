@@ -1,4 +1,4 @@
 {
-  "emptyStateText": "There are no <1>{{displayText}}</1> to display",
+  "emptyStateText": "There are no {{displayText}} to display",
   "Mental Health": "Mental Health"
 }

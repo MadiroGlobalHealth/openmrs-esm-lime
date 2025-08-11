@@ -1,7 +1,7 @@
 {
   "Add": "Add",
   "Date": "Date",
-  "emptyStateText": "There are no <1>{{displayText}}</1> to display",
+  "emptyStateText": "There are no {{displayText}} to display",
   "Meal": "Meal",
   "Nutrition": "Nutrition",
   "Nutrition Summary": "Nutrition Summary",

@@ -3,6 +3,7 @@
   "action": "الإجراء",
   "actions": "الإجراءات",
   "Date": "التاريخ",
+  "emptyStateText": "لا توجد {{displayText}} لعرضها",
   "Meal": "الوجبة",
   "Nutrition": "التغذية",
   "Nutrition Summary": "ملخص التغذية",
