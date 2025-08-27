@@ -1,4 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
+import { formatDate, useLayoutType, isDesktop as desktopLayout } from '@openmrs/esm-framework';
+import { CardHeader, ErrorState } from '@openmrs/esm-patient-common-lib';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import {
@@ -16,18 +18,28 @@ import {
   TableRow,
 } from '@carbon/react';
 import { Add } from '@carbon/react/icons';
-import { CardHeader, ErrorState } from '@openmrs/esm-patient-common-lib';
-import { formatDate, useLayoutType, isDesktop as desktopLayout } from '@openmrs/esm-framework';
 import { EmptyState } from '../empty-state/empty-state.component';
-import { usePatientNutrition } from '../hooks/nutrition.resource';
 import { launchClinicalViewForm, mealSymbol } from '../utils/helpers';
 import { type Encounter } from '../types';
+import { usePatientNutrition } from '../hooks/nutrition.resource';
 import { useForm } from '../hooks/form.resource';
-import { mealAmountConcepts, mealRemarkConcepts, nutritionFormName } from '../constants';
+import { feedingInformationConcept, mealAmountConcepts, mealRemarkConcepts, nutritionFormName } from '../constants';
 import styles from './nutrition-summary.scss';
+import { produce } from 'immer';
 
 interface NutritionSummaryProps {
   patientUuid: string;
+}
+
+interface MealItem {
+  mealTakenSymbol: string;
+  mealRemark: string;
+}
+
+interface TableRowData {
+  id: string;
+  encounterDate: string;
+  [key: string]: MealItem | string;
 }
 
 const NutritionSummary: React.FC<NutritionSummaryProps> = ({ patientUuid }) => {
@@ -38,6 +50,7 @@ const NutritionSummary: React.FC<NutritionSummaryProps> = ({ patientUuid }) => {
   const isDesktop = desktopLayout(layout);
   const { form, isLoading: formIsLoading } = useForm(nutritionFormName);
   const { nutritionData, error, isLoading, mutate } = usePatientNutrition(patientUuid);
+  console.log('nutritionData', nutritionData);
 
   const launchNutritionForm = useCallback(
     () => launchClinicalViewForm(form, patientUuid, mutate, 'add'),
@@ -77,14 +90,76 @@ const NutritionSummary: React.FC<NutritionSummaryProps> = ({ patientUuid }) => {
   };
 
   const tableRows = useMemo(() => {
-    return mealAmountConcepts.map((mealAmountConcept, index) => {
+    // Build table rows from feeding observations
+    const feedingRows: TableRowData[] = [];
+
+    nutritionData?.forEach((encounter) => {
+      const row: TableRowData = {
+        id: encounter.uuid,
+        encounterDate: formatDate(new Date(encounter.encounterDatetime), {
+          time: false,
+          noToday: true,
+        }),
+      };
+      feedingRows.push(row);
+    });
+
+    console.log('feedingRows', feedingRows);
+
+    // Build feeding observations from legacy concepts
+    const feedingObservations: TableRowData[] = mealAmountConcepts.map((mealAmountConcept, index) => {
       let mealNumber = (index % 10) + 1;
-      const row = { id: mealAmountConcept, encounterDate: `${t('Meal')} ${mealNumber}` };
+      const row: TableRowData = {
+        id: mealAmountConcept,
+        encounterDate: `${t('Meal')} ${mealNumber}`,
+      };
       nutritionData?.forEach((encounter) => {
         row[encounter.uuid] = getRowData(encounter, mealAmountConcept, index);
       });
       return row;
     });
+    console.log('feedingObservations', feedingObservations);
+
+    // nutritionData?.forEach((encounter) => {
+    //   const feedingInfoObs = encounter.obs.filter((obs) => obs.concept.uuid === feedingInformationConcept);
+    //   if (feedingInfoObs.length > 0) {
+    //     feedingInfoObs.forEach((obs) => {
+    //       obs.groupMembers &&
+    //       obs.groupMembers.forEach((groupMember) => {
+    //         const newFeedingObservations = produce(feedingObservations, draft => {
+    //           const amountMatch = groupMember?.formFieldPath.match(/rfe-forms-amountTaken(?:_(\d+))?/);
+    //           const remarkMatch = groupMember?.formFieldPath.match(/rfe-forms-remark(?:_(\d+))?/);
+
+    //           // Handle mealTakenSymbol
+    //           if (amountMatch) {
+    //             const mealIndex = amountMatch[1] ? Number(amountMatch[1]) - 1 : 0;
+    //             if (draft[mealIndex]) {
+    //               draft[mealIndex][encounter.uuid] = {
+    //                 ...(draft[mealIndex][encounter.uuid] || {}),
+    //                 mealTakenSymbol: mealSymbol(groupMember.value?.name?.name ?? ''),
+    //                 mealRemark: draft[mealIndex][encounter.uuid]?.mealRemark ?? '',
+    //               };
+    //             }
+    //           }
+
+    //           // Handle mealRemark
+    //           if (remarkMatch) {
+    //             const mealIndex = remarkMatch[1] ? Number(remarkMatch[1]) - 1 : 0;
+    //             if (draft[mealIndex]) {
+    //               draft[mealIndex][encounter.uuid] = {
+    //                 ...(draft[mealIndex][encounter.uuid] || {}),
+    //                 mealTakenSymbol: draft[mealIndex][encounter.uuid]?.mealTakenSymbol ?? '',
+    //                 mealRemark: groupMember.value?.name?.name?.charAt(0) ?? '',
+    //               };
+    //             }
+    //           }
+    //         });
+    //       });
+    //     });
+    //   }
+    // });
+
+    return feedingObservations;
   }, [nutritionData, t]);
 
   if (isLoading) return <DataTableSkeleton role="progressbar" compact={isDesktop} zebra />;
