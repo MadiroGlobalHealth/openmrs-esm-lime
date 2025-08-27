@@ -35,6 +35,8 @@ export const mealRemarkConcept8 = '6a36cb6c-d782-49d5-bcdc-43ac4b1b1c97';
 export const mealRemarkConcept9 = 'ad4760ec-bbbd-48f5-bef1-eeea3cf2afa6';
 export const mealRemarkConcept10 = 'e5d602d4-dc49-4c81-8fa5-e6419af12227';
 
+export const feedingInformationConcept = '9d5a0528-6e3f-482e-9cea-a9931be75244';
+
 export const mealAmountConcepts = [
   mealAmountTaken1,
   mealAmountTaken2,
