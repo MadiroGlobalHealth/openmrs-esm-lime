@@ -92,6 +92,10 @@ const NutritionSummary: React.FC<NutritionSummaryProps> = ({ patientUuid }) => {
   const tableRows = useMemo(() => {
     // Build table rows from feeding observations
     const feedingRows: TableRowData[] = [];
+    // Create meal labels
+    const mealLabels = Array.from({ length: 10 }, (_, index) => ({
+      [t('Meal {{number}}', { number: index + 1 })]: {}
+    })).reduce((acc, curr) => ({ ...acc, ...curr }), {});
 
     nutritionData?.forEach((encounter) => {
       const row: TableRowData = {
@@ -100,11 +104,15 @@ const NutritionSummary: React.FC<NutritionSummaryProps> = ({ patientUuid }) => {
           time: false,
           noToday: true,
         }),
+        ...mealLabels,
       };
+
+      mealAmountConcepts.forEach((mealAmountConcept, index) => {
+        let mealNumber = (index % 10) + 1;
+        row[`${t('Meal {{number}}', { number: mealNumber })}`] = getRowData(encounter, mealAmountConcept, index);
+      });
       feedingRows.push(row);
     });
-
-    console.log('feedingRows', feedingRows);
 
     // Build feeding observations from legacy concepts
     const feedingObservations: TableRowData[] = mealAmountConcepts.map((mealAmountConcept, index) => {
@@ -115,9 +123,11 @@ const NutritionSummary: React.FC<NutritionSummaryProps> = ({ patientUuid }) => {
       };
       nutritionData?.forEach((encounter) => {
         row[encounter.uuid] = getRowData(encounter, mealAmountConcept, index);
+        console.log("row[encounter.uuid]", row[encounter.uuid]);
       });
       return row;
     });
+    console.log('feedingRows', feedingRows);
     console.log('feedingObservations', feedingObservations);
 
     // nutritionData?.forEach((encounter) => {
