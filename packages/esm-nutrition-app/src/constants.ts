@@ -8,8 +8,8 @@ export const datePickerPlaceHolder = 'dd/mm/yyyy';
 export const dateFormat = 'YYYY-MM-DD';
 export const datePickerFormat = 'd/m/Y';
 
-export const nutritionFormName = 'MSF Nutrition - Feeding Form';
-export const nutritionFormUuid = '9ed6d34e-1415-47a6-82e8-30070f859f38';
+export const nutritionFormName = 'F10-Feeding';
+export const nutritionFormUuid = '5372abbc-0515-33e2-bee3-8d61f24cdea5';
 export const nutritionEncounterName = 'Nutrition';
 export const nutritionEncounterUuid = 'efb1ee49-ed60-40f4-aa2e-c45143dc4d49';
 
