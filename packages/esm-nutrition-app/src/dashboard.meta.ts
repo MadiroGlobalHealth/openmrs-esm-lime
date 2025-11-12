@@ -3,5 +3,5 @@ export const patientChartDashboardMeta = {
   columns: 1,
   title: 'Nutrition',
   path: 'Nutrition',
-  icon: 'nutrition',
+  icon: 'omrs-icon-calendar-heat-map',
 };

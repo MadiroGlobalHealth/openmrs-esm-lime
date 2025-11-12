@@ -3,5 +3,5 @@ export const patientChartDashboardMeta = {
   columns: 1,
   title: 'Mental Health',
   path: 'Mental Health',
-  icon: 'mental-health',
+  icon: 'omrs-icon-group-access',
 };
