@@ -10,7 +10,7 @@ A Nutrition frontend module for [OpenMRS 3.x](https://openmrs.org/), providing n
 - **Configurable**: Uses OpenMRS SPA config schema for customization.
 - **Modern UI**: Built with Carbon Design System components.
 
-### Demo 
+### Demo
 https://github.com/user-attachments/assets/3a3ee980-9a0d-49b3-a3a9-052f4b1cbbbe
 
 
@@ -46,8 +46,8 @@ Example (in your OpenMRS config):
 
 ## Configuration
 
-- **Form Name**: `MSF Nutrition - Feeding Form`
-- **Form UUID**: `9ed6d34e-1415-47a6-82e8-30070f859f38`
+- **Form Name**: `F10-Feeding`
+- **Form UUID**: `5372abbc-0515-33e2-bee3-8d61f24cdea5`
 - **Encounter Type**: `Nutrition` (`efb1ee49-ed60-40f4-aa2e-c45143dc4d49`)
 - **Concepts**: Meal amount and remark concepts are defined in `src/constants.ts`.
 
