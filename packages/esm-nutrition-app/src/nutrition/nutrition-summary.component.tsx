@@ -25,7 +25,6 @@ import { usePatientNutrition } from '../hooks/nutrition.resource';
 import { useForm } from '../hooks/form.resource';
 import { feedingInformationConcept, mealAmountConcepts, mealRemarkConcepts, nutritionFormName } from '../constants';
 import styles from './nutrition-summary.scss';
-import { produce } from 'immer';
 
 interface NutritionSummaryProps {
   patientUuid: string;
@@ -38,7 +37,7 @@ interface MealItem {
 
 interface TableRowData {
   id: string;
-  encounterDate: string;
+  meal: string;
   [key: string]: MealItem | string;
 }
 
@@ -66,7 +65,7 @@ const NutritionSummary: React.FC<NutritionSummaryProps> = ({ patientUuid }) => {
     return [
       ...[
         {
-          key: 'encounterDate',
+          key: 'meal',
           header: t('Date'),
         },
       ],
@@ -90,86 +89,72 @@ const NutritionSummary: React.FC<NutritionSummaryProps> = ({ patientUuid }) => {
   };
 
   const tableRows = useMemo(() => {
-    // Build table rows from feeding observations
     const feedingRows: TableRowData[] = [];
-    // Create meal labels
-    const mealLabels = Array.from({ length: 10 }, (_, index) => ({
-      [t('Meal {{number}}', { number: index + 1 })]: {}
-    })).reduce((acc, curr) => ({ ...acc, ...curr }), {});
-
-    nutritionData?.forEach((encounter) => {
+    // Build table rows from feeding observations
+    Array.from({ length: 10 }, (_, mealIndex) => {
       const row: TableRowData = {
-        id: encounter.uuid,
-        encounterDate: formatDate(new Date(encounter.encounterDatetime), {
-          time: false,
-          noToday: true,
-        }),
-        ...mealLabels,
+        id: `meal-${mealIndex + 1}`,
+        meal: `${t('Meal')} ${mealIndex + 1}`,
       };
+      // Build feeding rows
+      nutritionData?.forEach((encounter) => {
+        const feedingInformationObs = encounter.obs.filter((obs) => obs.concept.uuid === feedingInformationConcept);
+        if (feedingInformationObs.length > 0) {
+          feedingInformationObs.forEach((obs) => {
+            if (obs.groupMembers) {
+              for (let i = 0; i < obs.groupMembers.length; i++) {
+                const groupMember = obs.groupMembers[i];
+                const obsRow = { mealTakenSymbol: '', mealRemark: '' };
+                const amountMatch = groupMember?.formFieldPath.match(/rfe-forms-amountTaken(?:_(\d+))?/);
+                const remarkMatch = groupMember?.formFieldPath.match(/rfe-forms-remark(?:_(\d+))?/);
 
-      mealAmountConcepts.forEach((mealAmountConcept, index) => {
-        let mealNumber = (index % 10) + 1;
-        row[`${t('Meal {{number}}', { number: mealNumber })}`] = getRowData(encounter, mealAmountConcept, index);
+                if (!amountMatch && !remarkMatch) continue;
+
+                // Handle case where no amount or remark is found for the first meal
+                if (amountMatch && remarkMatch && mealIndex === 0) {
+                  if (amountMatch[1] === undefined) {
+                    obsRow.mealTakenSymbol = mealSymbol(groupMember.value?.name?.name ?? '');
+                  }
+
+                  if (remarkMatch[1] === undefined) {
+                    obsRow.mealRemark = groupMember.value?.name?.name.charAt(0) ?? '';
+                  }
+
+                  console.log('First meal match', obsRow);
+                  row[encounter.uuid] = obsRow;
+                  continue;
+                } else {
+                  // Skip if neither matches
+                  if (
+                    !(amountMatch && parseInt(amountMatch[1], 10) - 1 === mealIndex) &&
+                    !(remarkMatch && parseInt(remarkMatch[1], 10) - 1 === mealIndex)
+                  ) {
+                    continue;
+                  }
+
+                  // Check for amount match
+                  if (amountMatch && parseInt(amountMatch[1], 10) - 1 === mealIndex) {
+                    obsRow.mealTakenSymbol = mealSymbol(groupMember.value?.name?.name ?? '');
+                  }
+                  // Check for remark match
+                  if (remarkMatch && parseInt(remarkMatch[1], 10) - 1 === mealIndex) {
+                    obsRow.mealRemark = groupMember.value?.name?.name.charAt(0) ?? '';
+                  }
+                }
+                row[encounter.uuid] = obsRow;
+              }
+            }
+          });
+        } else {
+          // Legacy form support
+          row[encounter.uuid] = getRowData(encounter, mealAmountConcepts[mealIndex], mealIndex);
+        }
       });
       feedingRows.push(row);
     });
 
-    // Build feeding observations from legacy concepts
-    const feedingObservations: TableRowData[] = mealAmountConcepts.map((mealAmountConcept, index) => {
-      let mealNumber = (index % 10) + 1;
-      const row: TableRowData = {
-        id: mealAmountConcept,
-        encounterDate: `${t('Meal')} ${mealNumber}`,
-      };
-      nutritionData?.forEach((encounter) => {
-        row[encounter.uuid] = getRowData(encounter, mealAmountConcept, index);
-        console.log("row[encounter.uuid]", row[encounter.uuid]);
-      });
-      return row;
-    });
     console.log('feedingRows', feedingRows);
-    console.log('feedingObservations', feedingObservations);
-
-    // nutritionData?.forEach((encounter) => {
-    //   const feedingInfoObs = encounter.obs.filter((obs) => obs.concept.uuid === feedingInformationConcept);
-    //   if (feedingInfoObs.length > 0) {
-    //     feedingInfoObs.forEach((obs) => {
-    //       obs.groupMembers &&
-    //       obs.groupMembers.forEach((groupMember) => {
-    //         const newFeedingObservations = produce(feedingObservations, draft => {
-    //           const amountMatch = groupMember?.formFieldPath.match(/rfe-forms-amountTaken(?:_(\d+))?/);
-    //           const remarkMatch = groupMember?.formFieldPath.match(/rfe-forms-remark(?:_(\d+))?/);
-
-    //           // Handle mealTakenSymbol
-    //           if (amountMatch) {
-    //             const mealIndex = amountMatch[1] ? Number(amountMatch[1]) - 1 : 0;
-    //             if (draft[mealIndex]) {
-    //               draft[mealIndex][encounter.uuid] = {
-    //                 ...(draft[mealIndex][encounter.uuid] || {}),
-    //                 mealTakenSymbol: mealSymbol(groupMember.value?.name?.name ?? ''),
-    //                 mealRemark: draft[mealIndex][encounter.uuid]?.mealRemark ?? '',
-    //               };
-    //             }
-    //           }
-
-    //           // Handle mealRemark
-    //           if (remarkMatch) {
-    //             const mealIndex = remarkMatch[1] ? Number(remarkMatch[1]) - 1 : 0;
-    //             if (draft[mealIndex]) {
-    //               draft[mealIndex][encounter.uuid] = {
-    //                 ...(draft[mealIndex][encounter.uuid] || {}),
-    //                 mealTakenSymbol: draft[mealIndex][encounter.uuid]?.mealTakenSymbol ?? '',
-    //                 mealRemark: groupMember.value?.name?.name?.charAt(0) ?? '',
-    //               };
-    //             }
-    //           }
-    //         });
-    //       });
-    //     });
-    //   }
-    // });
-
-    return feedingObservations;
+    return feedingRows;
   }, [nutritionData, t]);
 
   if (isLoading) return <DataTableSkeleton role="progressbar" compact={isDesktop} zebra />;
