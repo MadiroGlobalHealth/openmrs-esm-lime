@@ -17,8 +17,13 @@ export function usePatientNutrition(patientUuid: string) {
     openmrsFetch,
   );
 
+  // Sort by encounterDateTime
+  const nutritionData = data?.data.results.sort((a, b) => {
+    return new Date(a.encounterDatetime).getTime() - new Date(b.encounterDatetime).getTime();
+  });
+
   return {
-    nutritionData: data?.data.results,
+    nutritionData,
     error,
     isLoading,
     mutate,
