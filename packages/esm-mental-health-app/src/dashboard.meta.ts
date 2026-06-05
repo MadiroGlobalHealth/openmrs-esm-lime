@@ -4,4 +4,4 @@ export const patientChartDashboardMeta = {
   title: 'Mental Health',
   path: 'Mental Health',
   icon: 'omrs-icon-group-access',
-};
+} as const;

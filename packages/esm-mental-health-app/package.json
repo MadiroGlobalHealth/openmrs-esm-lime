@@ -48,5 +48,8 @@
     "react-i18next": "16.x",
     "react-router-dom": "6.x",
     "swr": "2.x"
+  },
+  "devDependencies": {
+    "webpack": "^5.99.9"
   }
 }

@@ -16,15 +16,18 @@
       "scripthost",
     ],
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "noEmit": true,
     "paths": {
-      "@openmrs/*": ["./node_modules/@openmrs/*"],
+      "@openmrs/esm-styleguide/src/public": ["./node_modules/@openmrs/esm-styleguide/dist/public.d.ts"],
+      "@openmrs/esm-styleguide/src/internal": ["./node_modules/@openmrs/esm-styleguide/dist/internal.d.ts"],
       "__mocks__": ["./__mocks__"],
       "tools": ["./tools"],
     },
     "resolveJsonModule": true,
     "skipLibCheck": true,
+    "typeRoots": ["./node_modules/@types", "./node_modules/testing-library"],
+    "types": ["webpack-env", "jest", "node", "fhir"],
     "target": "esnext",
   }
 }
