@@ -60,7 +60,7 @@ export const generateRandomPatient = async (api: APIRequestContext): Promise<Pat
         {
           identifier,
           identifierType: '05a29f94-c0ed-11e2-94be-8c13b969e334',
-          location: '44c3efb0-2583-4c80-a79e-1f756a03c0a1',
+          location: process.env.E2E_LOGIN_DEFAULT_LOCATION_UUID,
           preferred: true,
         },
       ],

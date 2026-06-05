@@ -1,6 +1,6 @@
-import test from '@playwright/test';
-import { HomePage } from '../pages';
 import { expect } from '@playwright/test';
+import { test } from '../core';
+import { HomePage } from '../pages';
 
 // This test is a sample E2E test. You can delete it.
 
