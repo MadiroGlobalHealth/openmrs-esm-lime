@@ -1,4 +1,4 @@
-import { launchWorkspace, openmrsFetch, restBaseUrl } from '@openmrs/esm-framework';
+import { launchWorkspace2, openmrsFetch, restBaseUrl } from '@openmrs/esm-framework';
 import { type FormSchema } from '@openmrs/esm-form-engine-lib';
 import dayjs from 'dayjs';
 import { dateFormat } from '../constants';
@@ -13,22 +13,26 @@ export function launchClinicalViewForm(
   encounterUuid?: string,
   workspaceWindowSize?: 'minimized' | 'maximized',
 ) {
-  launchWorkspace('patient-form-entry-workspace', {
-    workspaceTitle: form.name,
-    mutateForm: onFormSave,
-    formInfo: {
-      encounterUuid,
-      formUuid: form.name,
-      patientUuid: patientUuid,
-      visitTypeUuid: '',
-      visitUuid: '',
-      visitStartDatetime: '',
-      visitStopDatetime: '',
-      additionalProps: {
-        mode: action === 'add' ? 'enter' : action,
+  launchWorkspace2(
+    'patient-form-entry-workspace',
+    {
+      workspaceTitle: form.name,
+      mutateForm: onFormSave,
+      formInfo: {
+        encounterUuid,
+        formUuid: form.name,
+        patientUuid: patientUuid,
+        visitTypeUuid: '',
+        visitUuid: '',
+        visitStartDatetime: '',
+        visitStopDatetime: '',
+        additionalProps: {
+          mode: action === 'add' ? 'enter' : action,
+        },
       },
     },
-  });
+    { patientUuid },
+  );
 }
 
 export function mealSymbol(value: string): string {

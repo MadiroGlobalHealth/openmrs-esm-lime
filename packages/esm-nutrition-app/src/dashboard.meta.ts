@@ -4,4 +4,4 @@ export const patientChartDashboardMeta = {
   title: 'Nutrition',
   path: 'Nutrition',
   icon: 'omrs-icon-calendar-heat-map',
-};
+} as const;

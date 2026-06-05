@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "@carbon/react": "^1.83.0",
-    "@openmrs/esm-form-engine-lib": "next",
+    "@openmrs/esm-form-engine-lib": "^4.1.1-pre.2320",
     "lodash-es": "^4.17.15",
     "yup": "^0.32.11"
   },
@@ -51,5 +51,8 @@
     "react-i18next": "16.x",
     "react-router-dom": "6.x",
     "swr": "2.x"
+  },
+  "devDependencies": {
+    "webpack": "^5.99.9"
   }
 }

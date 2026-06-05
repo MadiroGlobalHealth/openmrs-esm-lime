@@ -1,20 +1,16 @@
-import { launchWorkspace, openmrsFetch } from '@openmrs/esm-framework';
+import { launchWorkspace2, openmrsFetch } from '@openmrs/esm-framework';
 import dayjs from 'dayjs';
 import { launchClinicalViewForm, mealSymbol, getPatientEncounterDates } from './helpers';
 import { dateFormat } from '../constants';
 
-jest.mock('@openmrs/esm-patient-common-lib', () => ({
-  launchWorkspace: jest.fn(),
-}));
-
 jest.mock('@openmrs/esm-framework', () => ({
   openmrsFetch: jest.fn(),
-  launchWorkspace: jest.fn(),
+  launchWorkspace2: jest.fn().mockResolvedValue(true),
   restBaseUrl: 'http://localhost:8080/openmrs/ws/rest/v1',
 }));
 
 describe('launchClinicalViewForm', () => {
-  it('should call launchWorkspace with correct parameters', () => {
+  it('should call launchWorkspace2 with correct parameters', () => {
     const form = { name: 'Test Form' } as any;
     const patientUuid = 'patient-uuid';
     const onFormSave = jest.fn();
@@ -22,22 +18,26 @@ describe('launchClinicalViewForm', () => {
 
     launchClinicalViewForm(form, patientUuid, onFormSave, action);
 
-    expect(launchWorkspace).toHaveBeenCalledWith('patient-form-entry-workspace', {
-      workspaceTitle: form.name,
-      mutateForm: onFormSave,
-      formInfo: {
-        encounterUuid: undefined,
-        formUuid: form.name,
-        patientUuid: patientUuid,
-        visitTypeUuid: '',
-        visitUuid: '',
-        visitStartDatetime: '',
-        visitStopDatetime: '',
-        additionalProps: {
-          mode: 'enter',
+    expect(launchWorkspace2).toHaveBeenCalledWith(
+      'patient-form-entry-workspace',
+      {
+        workspaceTitle: form.name,
+        mutateForm: onFormSave,
+        formInfo: {
+          encounterUuid: undefined,
+          formUuid: form.name,
+          patientUuid: patientUuid,
+          visitTypeUuid: '',
+          visitUuid: '',
+          visitStartDatetime: '',
+          visitStopDatetime: '',
+          additionalProps: {
+            mode: 'enter',
+          },
         },
       },
-    });
+      { patientUuid },
+    );
   });
 });
 
