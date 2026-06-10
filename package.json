@@ -1,6 +1,6 @@
 {
   "name": "@madiro/openmrs-esm-lime",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "description": "LIME EMR microfrontends for the OpenMRS 3.x",
   "workspaces": [
@@ -71,5 +71,5 @@
     "packages/**/src/**/*.{ts,tsx}": "eslint --cache --fix --max-warnings 0",
     "*.{css,scss,ts,tsx}": "prettier --cache --write --list-different"
   },
-  "packageManager": "yarn@4.9.2"
+  "packageManager": "yarn@4.16.0"
 }

@@ -1,6 +1,6 @@
 {
   "name": "@madiro/esm-mental-health-app",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Mental Health micro-frontend module for the OpenMRS SPA",
   "browser": "dist/openmrs-esm-mental-health-app.js",
   "main": "src/index.ts",
