@@ -27,7 +27,7 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "typeRoots": ["./node_modules/@types", "./node_modules/testing-library"],
-    "types": ["webpack-env", "jest", "node", "fhir"],
+    "types": ["webpack-env", "node", "fhir"],
     "target": "esnext",
   }
 }

@@ -1,11 +1,12 @@
+import { vi } from 'vitest';
 import { launchWorkspace2, openmrsFetch } from '@openmrs/esm-framework';
 import dayjs from 'dayjs';
 import { launchClinicalViewForm, mealSymbol, getPatientEncounterDates } from './helpers';
 import { dateFormat } from '../constants';
 
-jest.mock('@openmrs/esm-framework', () => ({
-  openmrsFetch: jest.fn(),
-  launchWorkspace2: jest.fn().mockResolvedValue(true),
+vi.mock('@openmrs/esm-framework', () => ({
+  openmrsFetch: vi.fn(),
+  launchWorkspace2: vi.fn().mockResolvedValue(true),
   restBaseUrl: 'http://localhost:8080/openmrs/ws/rest/v1',
 }));
 
@@ -13,7 +14,7 @@ describe('launchClinicalViewForm', () => {
   it('should call launchWorkspace2 with correct parameters', () => {
     const form = { name: 'Test Form' } as any;
     const patientUuid = 'patient-uuid';
-    const onFormSave = jest.fn();
+    const onFormSave = vi.fn();
     const action = 'add';
 
     launchClinicalViewForm(form, patientUuid, onFormSave, action);
@@ -64,7 +65,7 @@ describe('getPatientEncounterDates', () => {
       },
     };
 
-    (openmrsFetch as jest.Mock).mockResolvedValue(mockData);
+    vi.mocked(openmrsFetch).mockResolvedValue(mockData as any);
 
     const result = await getPatientEncounterDates(patientUuid, encounterTypeUuid);
 
@@ -79,7 +80,7 @@ describe('getPatientEncounterDates', () => {
     const encounterTypeUuid = 'encounter-type-uuid';
     const mockData = { data: { results: [] } };
 
-    (openmrsFetch as jest.Mock).mockResolvedValue(mockData);
+    vi.mocked(openmrsFetch).mockResolvedValue(mockData as any);
 
     const result = await getPatientEncounterDates(patientUuid, encounterTypeUuid);
 
