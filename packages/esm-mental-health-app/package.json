@@ -9,10 +9,10 @@
   "homepage": "https://github.com/MadiroGlobalHealth/openmrs-esm-lime#readme",
   "scripts": {
     "start": "openmrs develop",
-    "serve": "webpack serve --mode=development",
+    "serve": "rspack serve --mode=development",
     "debug": "npm run serve",
-    "build": "webpack --mode production",
-    "analyze": "webpack --mode=production --env.analyze=true",
+    "build": "rspack --mode=production",
+    "analyze": "rspack --mode=production --env analyze=true",
     "lint": "eslint src --ext tsx",
     "test": "vitest run --passWithNoTests",
     "test-watch": "vitest --watch",
@@ -50,6 +50,6 @@
     "swr": "2.x"
   },
   "devDependencies": {
-    "webpack": "^5.99.9"
+    "openmrs": "next"
   }
 }
