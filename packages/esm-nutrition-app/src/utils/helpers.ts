@@ -20,7 +20,7 @@ export function launchClinicalViewForm(
       mutateForm: onFormSave,
       formInfo: {
         encounterUuid,
-        formUuid: form.name,
+        formUuid: form.uuid,
         patientUuid: patientUuid,
         visitTypeUuid: '',
         visitUuid: '',
