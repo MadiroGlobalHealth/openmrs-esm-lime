@@ -1,6 +1,5 @@
-import React, { useCallback, useMemo } from 'react';
-import { useSWRConfig } from 'swr';
-import { formatDate, restBaseUrl, useLayoutType, isDesktop as desktopLayout } from '@openmrs/esm-framework';
+import React, { useCallback, useEffect, useRef, useMemo } from 'react';
+import { formatDate, getGlobalStore, useLayoutType, isDesktop as desktopLayout } from '@openmrs/esm-framework';
 import { CardHeader, ErrorState } from '@openmrs/esm-patient-common-lib';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
@@ -24,7 +23,7 @@ import { launchClinicalViewForm, mealSymbol } from '../utils/helpers';
 import { type Encounter } from '../types';
 import { usePatientNutrition } from '../hooks/nutrition.resource';
 import { useForm } from '../hooks/form.resource';
-import { feedingInformationConcept, mealAmountConcepts, mealRemarkConcepts, nutritionFormName } from '../constants';
+import { feedingInformationConcept, mealAmountConcepts, mealRemarkConcepts, nutritionFormUuid } from '../constants';
 import styles from './nutrition-summary.scss';
 
 interface NutritionSummaryProps {
@@ -48,27 +47,35 @@ const NutritionSummary: React.FC<NutritionSummaryProps> = ({ patientUuid }) => {
   const layout = useLayoutType();
   const isTablet = layout === 'tablet';
   const isDesktop = desktopLayout(layout);
-  const { mutate: globalMutate } = useSWRConfig();
-  const { form, isLoading: formIsLoading } = useForm(nutritionFormName);
-  const { nutritionData, error, isLoading } = usePatientNutrition(patientUuid);
+  const { form, isLoading: formIsLoading } = useForm(nutritionFormUuid);
+  const { nutritionData, error, isLoading, mutate } = usePatientNutrition(patientUuid);
 
-  const handleFormSave = useCallback(
-    () =>
-      globalMutate(
-        (key: unknown) =>
-          typeof key === 'string' && key.includes(`${restBaseUrl}/encounter`) && key.includes(`patient=${patientUuid}`),
-      ),
-    [globalMutate, patientUuid],
-  );
+  const formWorkspaceWasOpen = useRef(false);
+
+  useEffect(() => {
+    const store = getGlobalStore<{ openedWindows: Array<{ openedWorkspaces: Array<{ workspaceName: string }> }> }>(
+      'workspace2',
+    );
+    const unsubscribe = store.subscribe((state) => {
+      const isOpen = state.openedWindows?.some((w) =>
+        w.openedWorkspaces?.some((ws) => ws.workspaceName === 'patient-form-entry-workspace'),
+      );
+      if (formWorkspaceWasOpen.current && !isOpen) {
+        mutate();
+      }
+      formWorkspaceWasOpen.current = isOpen ?? false;
+    });
+    return unsubscribe;
+  }, [mutate]);
 
   const launchNutritionForm = useCallback(() => {
     if (!form) return;
-    launchClinicalViewForm(form, patientUuid, handleFormSave, 'add');
-  }, [form, patientUuid, handleFormSave]);
+    launchClinicalViewForm(form, patientUuid, 'add');
+  }, [form, patientUuid]);
 
   const editNutritionEncounterForm = (encounterUuid: string) => {
     if (!form) return;
-    launchClinicalViewForm(form, patientUuid, handleFormSave, 'edit', encounterUuid);
+    launchClinicalViewForm(form, patientUuid, 'edit', encounterUuid);
   };
 
   const tableHeaders = useMemo(() => {
@@ -102,8 +109,8 @@ const NutritionSummary: React.FC<NutritionSummaryProps> = ({ patientUuid }) => {
       const amountMatch = /rfe-forms-amountTaken(?:_(\d+))?/.exec(groupMember?.formFieldPath ?? '');
       const remarkMatch = /rfe-forms-remark(?:_(\d+))?/.exec(groupMember?.formFieldPath ?? '');
       if (!amountMatch && !remarkMatch) return {};
-      const amountIndex = amountMatch?.[1] ? Number.parseInt(amountMatch[1], 10) - 1 : 0;
-      const remarkIndex = remarkMatch?.[1] ? Number.parseInt(remarkMatch[1], 10) - 1 : 0;
+      const amountIndex = amountMatch?.[1] ? Number.parseInt(amountMatch[1], 10) : 0;
+      const remarkIndex = remarkMatch?.[1] ? Number.parseInt(remarkMatch[1], 10) : 0;
       const result: Partial<MealItem> = {};
       if (amountMatch && amountIndex === mealIndex)
         result.mealTakenSymbol = mealSymbol(groupMember.value?.name?.name ?? '');

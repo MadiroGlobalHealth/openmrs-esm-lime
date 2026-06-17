@@ -1,34 +1,23 @@
 import { launchWorkspace2, openmrsFetch, restBaseUrl } from '@openmrs/esm-framework';
-import { type FormSchema } from '@openmrs/esm-form-engine-lib';
+import { type Form } from '@openmrs/esm-patient-common-lib';
 import dayjs from 'dayjs';
 import { dateFormat } from '../constants';
 
 type FormAction = 'add' | 'view' | 'edit';
 
 export function launchClinicalViewForm(
-  form: FormSchema,
+  form: Form,
   patientUuid: string,
-  onFormSave: () => void,
   action: FormAction = 'add',
   encounterUuid?: string,
-  workspaceWindowSize?: 'minimized' | 'maximized',
 ) {
   launchWorkspace2(
     'patient-form-entry-workspace',
     {
-      workspaceTitle: form.name,
-      mutateForm: onFormSave,
-      formInfo: {
-        encounterUuid,
-        formUuid: form.uuid,
-        patientUuid: patientUuid,
-        visitTypeUuid: '',
-        visitUuid: '',
-        visitStartDatetime: '',
-        visitStopDatetime: '',
-        additionalProps: {
-          mode: action === 'add' ? 'enter' : action,
-        },
+      form,
+      encounterUuid,
+      additionalProps: {
+        mode: action === 'add' ? 'enter' : action,
       },
     },
     { patientUuid },
