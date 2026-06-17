@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
-import { formatDate, useLayoutType, isDesktop as desktopLayout } from '@openmrs/esm-framework';
+import { useSWRConfig } from 'swr';
+import { formatDate, restBaseUrl, useLayoutType, isDesktop as desktopLayout } from '@openmrs/esm-framework';
 import { CardHeader, ErrorState } from '@openmrs/esm-patient-common-lib';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
@@ -47,17 +48,27 @@ const NutritionSummary: React.FC<NutritionSummaryProps> = ({ patientUuid }) => {
   const layout = useLayoutType();
   const isTablet = layout === 'tablet';
   const isDesktop = desktopLayout(layout);
+  const { mutate: globalMutate } = useSWRConfig();
   const { form, isLoading: formIsLoading } = useForm(nutritionFormName);
-  const { nutritionData, error, isLoading, mutate } = usePatientNutrition(patientUuid);
+  const { nutritionData, error, isLoading } = usePatientNutrition(patientUuid);
+
+  const handleFormSave = useCallback(
+    () =>
+      globalMutate(
+        (key: unknown) =>
+          typeof key === 'string' && key.includes(`${restBaseUrl}/encounter`) && key.includes(`patient=${patientUuid}`),
+      ),
+    [globalMutate, patientUuid],
+  );
 
   const launchNutritionForm = useCallback(() => {
     if (!form) return;
-    launchClinicalViewForm(form, patientUuid, mutate, 'add');
-  }, [form, patientUuid, mutate]);
+    launchClinicalViewForm(form, patientUuid, handleFormSave, 'add');
+  }, [form, patientUuid, handleFormSave]);
 
   const editNutritionEncounterForm = (encounterUuid: string) => {
     if (!form) return;
-    launchClinicalViewForm(form, patientUuid, mutate, 'edit', encounterUuid);
+    launchClinicalViewForm(form, patientUuid, handleFormSave, 'edit', encounterUuid);
   };
 
   const tableHeaders = useMemo(() => {
