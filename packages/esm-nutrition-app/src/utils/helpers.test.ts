@@ -11,34 +11,55 @@ vi.mock('@openmrs/esm-framework', () => ({
 }));
 
 describe('launchClinicalViewForm', () => {
-  it('should call launchWorkspace2 with correct parameters', () => {
-    const form = { name: 'Test Form', uuid: 'test-form-uuid' } as any;
-    const patientUuid = 'patient-uuid';
-    const onFormSave = vi.fn();
-    const action = 'add';
+  const form = {
+    name: 'Test Form',
+    uuid: 'test-form-uuid',
+    version: '1',
+    published: true,
+    retired: false,
+    resources: [],
+  } as any;
+  const patientUuid = 'patient-uuid';
 
-    launchClinicalViewForm(form, patientUuid, onFormSave, action);
+  beforeEach(() => {
+    vi.mocked(launchWorkspace2).mockClear();
+  });
+
+  it('launches workspace with correct props in add mode', () => {
+    launchClinicalViewForm(form, patientUuid);
 
     expect(launchWorkspace2).toHaveBeenCalledWith(
       'patient-form-entry-workspace',
       {
-        workspaceTitle: form.name,
-        mutateForm: onFormSave,
-        formInfo: {
-          encounterUuid: undefined,
-          formUuid: form.uuid,
-          patientUuid: patientUuid,
-          visitTypeUuid: '',
-          visitUuid: '',
-          visitStartDatetime: '',
-          visitStopDatetime: '',
-          additionalProps: {
-            mode: 'enter',
-          },
-        },
+        form,
+        encounterUuid: undefined,
+        additionalProps: { mode: 'enter' },
       },
       { patientUuid },
     );
+  });
+
+  it('launches workspace with correct props in edit mode', () => {
+    const encounterUuid = 'encounter-uuid';
+    launchClinicalViewForm(form, patientUuid, 'edit', encounterUuid);
+
+    expect(launchWorkspace2).toHaveBeenCalledWith(
+      'patient-form-entry-workspace',
+      {
+        form,
+        encounterUuid,
+        additionalProps: { mode: 'edit' },
+      },
+      { patientUuid },
+    );
+  });
+
+  it('passes the full form object so workspace can read form.uuid without errors', () => {
+    launchClinicalViewForm(form, patientUuid, 'add');
+
+    const [, workspaceProps] = vi.mocked(launchWorkspace2).mock.calls[0];
+    expect((workspaceProps as any).form).toBeDefined();
+    expect((workspaceProps as any).form.uuid).toBe('test-form-uuid');
   });
 });
 

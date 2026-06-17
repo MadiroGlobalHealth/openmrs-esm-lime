@@ -1,10 +1,10 @@
 import { openmrsFetch, restBaseUrl } from '@openmrs/esm-framework';
-import { type FormSchema } from '@openmrs/esm-form-engine-lib';
+import { type Form } from '@openmrs/esm-patient-common-lib';
 import useSWR from 'swr';
 
-export function useForm(formName: string) {
-  const { data, error, isLoading } = useSWR<{ data: FormSchema }, Error>(
-    `${restBaseUrl}/o3/forms/${formName}`,
+export function useForm(formUuid: string) {
+  const { data, error, isLoading } = useSWR<{ data: Form }, Error>(
+    `${restBaseUrl}/form/${formUuid}?v=full`,
     openmrsFetch,
   );
 
