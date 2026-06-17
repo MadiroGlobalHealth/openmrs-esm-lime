@@ -136,7 +136,7 @@ const NutritionSummary: React.FC<NutritionSummaryProps> = ({ patientUuid }) => {
   if (isLoading) return <DataTableSkeleton role="progressbar" compact={isDesktop} zebra />;
   if (error) return <ErrorState error={error} headerTitle={nutritionSummaryText} />;
   if ((nutritionData?.length ?? 0) === 0)
-    return <EmptyState displayText={nutritionSummaryText} launchForm={launchNutritionForm} />;
+    return <EmptyState displayText={nutritionSummaryText} launchForm={form ? launchNutritionForm : undefined} />;
   if ((nutritionData?.length ?? 0) > 0) {
     return (
       <div className={styles.nutritionWidgetCard}>

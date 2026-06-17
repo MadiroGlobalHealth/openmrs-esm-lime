@@ -12,7 +12,7 @@ vi.mock('@openmrs/esm-framework', () => ({
 
 describe('launchClinicalViewForm', () => {
   it('should call launchWorkspace2 with correct parameters', () => {
-    const form = { name: 'Test Form' } as any;
+    const form = { name: 'Test Form', uuid: 'test-form-uuid' } as any;
     const patientUuid = 'patient-uuid';
     const onFormSave = vi.fn();
     const action = 'add';
@@ -26,7 +26,7 @@ describe('launchClinicalViewForm', () => {
         mutateForm: onFormSave,
         formInfo: {
           encounterUuid: undefined,
-          formUuid: form.name,
+          formUuid: form.uuid,
           patientUuid: patientUuid,
           visitTypeUuid: '',
           visitUuid: '',
