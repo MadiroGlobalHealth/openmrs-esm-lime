@@ -11,8 +11,8 @@ A Nutrition frontend module for [OpenMRS 3.x](https://openmrs.org/), providing n
 - **Modern UI**: Built with Carbon Design System components.
 
 ### Demo
-https://github.com/user-attachments/assets/3a3ee980-9a0d-49b3-a3a9-052f4b1cbbbe
 
+[Demo](https://github.com/user-attachments/assets/3a3ee980-9a0d-49b3-a3a9-052f4b1cbbbe)
 
 ## Installation
 
@@ -33,6 +33,7 @@ Register the app as an extension in your OpenMRS SPA configuration. The app prov
 - `patientNutritionDetailsWidget` (nutrition summary widget)
 
 Example (in your OpenMRS config):
+
 ```json
 {
   "extensions": [
@@ -78,7 +79,7 @@ The app is written in TypeScript. Config extends the root `tsconfig.json`.
 
 ## Testing
 
-Unit tests are written with Jest. Example test file: `src/utils/helpers.test.ts`.
+Unit tests are written with Vitest. Example test file: `src/utils/helpers.test.ts`.
 
 To run tests:
 

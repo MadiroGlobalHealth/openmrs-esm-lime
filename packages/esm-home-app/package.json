@@ -1,0 +1,49 @@
+{
+  "name": "@madiro/esm-home-app",
+  "version": "1.1.0",
+  "description": "Homepage microfrontend for the OpenMRS SPA",
+  "browser": "dist/openmrs-esm-home-app.js",
+  "main": "src/index.ts",
+  "source": true,
+  "license": "MPL-2.0",
+  "homepage": "https://github.com/MadiroGlobalHealth/openmrs-esm-lime#readme",
+  "scripts": {
+    "start": "openmrs develop",
+    "serve": "rspack serve --mode=development",
+    "debug": "npm run serve",
+    "build": "rspack --mode=production",
+    "analyze": "rspack --mode=production --env analyze=true",
+    "lint": "eslint src --ext tsx",
+    "test": "vitest run --passWithNoTests",
+    "test-watch": "vitest --watch",
+    "coverage": "vitest run --coverage --passWithNoTests",
+    "typescript": "tsc",
+    "extract-translations": "i18next 'src/**/*.component.tsx' 'src/**/*.extension.tsx' 'src/**/*modal.tsx' 'src/**/*.workspace.tsx' 'src/index.ts' --config ../../tools/i18next-parser.config.js"
+  },
+  "browserslist": [
+    "extends browserslist-config-openmrs"
+  ],
+  "keywords": [
+    "openmrs"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MadiroGlobalHealth/openmrs-esm-lime.git"
+  },
+  "bugs": {
+    "url": "https://github.com/MadiroGlobalHealth/openmrs-esm-lime/issues"
+  },
+  "peerDependencies": {
+    "@openmrs/esm-framework": "9.x",
+    "react": "18.x",
+    "react-i18next": "16.x",
+    "react-router-dom": "6.x",
+    "swr": "2.x"
+  },
+  "devDependencies": {
+    "openmrs": "next"
+  }
+}
