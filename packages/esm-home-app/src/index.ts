@@ -1,0 +1,34 @@
+import { defineConfigSchema, getAsyncLifecycle, getSyncLifecycle } from '@openmrs/esm-framework';
+import { createDashboardLink } from './createDashboardLink.component';
+import { dashboardMeta } from './dashboard.meta';
+import { esmHomeSchema } from './config-schema';
+import homeNavMenuComponent from './side-menu/side-menu.component';
+import homeWidgetDashboardComponent from './home-page-widgets/home-page-widgets.component';
+import rootComponent from './root.component';
+
+const moduleName = '@madiro/esm-home-app';
+const pageName = 'home';
+
+const options = {
+  featureName: pageName,
+  moduleName,
+};
+
+export const importTranslation = require.context('../translations', true, /.json$/, 'lazy');
+
+export const root = getSyncLifecycle(rootComponent, options);
+
+export const homeNavMenu = getSyncLifecycle(homeNavMenuComponent, options);
+
+export const homeWidgetDbLink = getSyncLifecycle(createDashboardLink(dashboardMeta), options);
+
+export const homeWidgetDashboard = getSyncLifecycle(homeWidgetDashboardComponent, options);
+
+// t('home', 'Home')
+export const homePageHeader = getAsyncLifecycle(() => import('./page-header/page-header.component'), options);
+
+export const metrics = getAsyncLifecycle(() => import('./metrics/metrics.component'), options);
+
+export function startupApp() {
+  defineConfigSchema(moduleName, esmHomeSchema);
+}
