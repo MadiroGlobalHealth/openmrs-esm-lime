@@ -37,4 +37,12 @@ RUN chmod +x /usr/local/bin/startup.sh
 
 COPY --from=dev /app/spa/ /usr/share/nginx/html/
 
+# The reference application image ships pre-compressed .br/.gz siblings next to its
+# assets, and nginx serves those in preference to the plain file. `openmrs assemble`
+# writes only uncompressed files, so our importmap.json and routes.registry.json landed
+# on disk while nginx kept serving the stale upstream copies -- a distro with none of our
+# apps in it. Drop any compressed sibling whose plain file is present so ours wins.
+RUN find /usr/share/nginx/html -maxdepth 1 \( -name '*.br' -o -name '*.gz' \) \
+      -exec sh -c 'for f; do [ -f "${f%.*}" ] && rm -f "$f"; done' sh {} +
+
 CMD ["/usr/local/bin/startup.sh"]
