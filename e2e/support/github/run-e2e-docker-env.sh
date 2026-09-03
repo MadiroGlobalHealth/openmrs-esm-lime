@@ -60,3 +60,13 @@ echo "Starting Docker containers..."
 # CACHE_BUST to ensure the assemble step is always run
 docker compose build --build-arg CACHE_BUST=$(date +%s) frontend
 docker compose up -d
+
+# The image we build and the container that ends up serving the SPA have disagreed:
+# the build produced an importmap containing our apps while the running frontend served
+# the upstream one. Report what is actually being served before the tests depend on it.
+echo "Verifying the running frontend serves our assembled SPA..."
+docker compose exec -T frontend sh -c \
+  'echo "importmap bytes: $(wc -c < /usr/share/nginx/html/importmap.json)"; \
+   echo "our apps in importmap:"; \
+   grep -o "@madiro/[a-z-]*" /usr/share/nginx/html/importmap.json | sort -u; \
+   echo "our app dirs:"; ls -d /usr/share/nginx/html/madiro-* 2>/dev/null || echo "  NONE"'
