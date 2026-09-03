@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import {
   useLayoutType,
   isDesktop,
-  useExtensionStore,
+  useAssignedExtensions,
   ExtensionSlot,
   WorkspaceContainer,
   useConfig,
@@ -16,14 +16,11 @@ import { type ConfigSchema } from '../config-schema';
 
 export default function HomeDashboard() {
   const params = useParams();
-  const extensionStore = useExtensionStore();
   const layout = useLayoutType();
   const { leftNavMode } = useConfig<ConfigSchema>();
 
-  const ungroupedDashboards =
-    extensionStore.slots['homepage-dashboard-slot']?.assignedExtensions
-      .map((e) => e.meta)
-      .filter((e) => Object.keys(e).length) || [];
+  const assignedExtensions = useAssignedExtensions('homepage-dashboard-slot');
+  const ungroupedDashboards = assignedExtensions.map((e) => e.meta).filter((e) => Object.keys(e).length);
   const dashboards = ungroupedDashboards as Array<DashboardConfig>;
   const activeDashboard = dashboards.find((dashboard) => dashboard.name === params?.dashboard) || dashboards[0];
 

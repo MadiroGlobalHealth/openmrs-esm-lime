@@ -39,12 +39,12 @@
   },
   "dependencies": {
     "@carbon/react": "^1.83.0",
-    "@openmrs/esm-form-engine-lib": "^4.1.1-pre.2320",
+    "@openmrs/esm-form-engine-lib": "^4.2.1",
     "lodash-es": "^4.17.15",
     "yup": "^0.32.11"
   },
   "peerDependencies": {
-    "@openmrs/esm-framework": "9.x",
+    "@openmrs/esm-framework": "10.x",
     "@openmrs/esm-patient-common-lib": "12.x",
     "dayjs": "1.x",
     "react": "18.x",
