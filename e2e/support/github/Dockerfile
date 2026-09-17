@@ -12,8 +12,9 @@ RUN npm_config_legacy_peer_deps=true npm install -g openmrs@${APP_SHELL_VERSION:
 ARG CACHE_BUST
 RUN npm_config_legacy_peer_deps=true openmrs assemble --manifest --mode config --config spa-assemble-config.json --target ./spa
 
-# `openmrs assemble` exits 0 even when it writes nothing, which yields a distro missing
-# every app under test and e2e failures that point at the widgets instead of the assembly.
+# `openmrs assemble` now fails on modules missing routes.json or an entrypoint, but still
+# exits 0 when given no modules at all, which yields a distro missing every app under test
+# and e2e failures that point at the widgets instead of the assembly.
 RUN echo "--- assembled SPA ---" && ls -la ./spa && du -sh ./spa && \
     echo "--- importmap ---" && cat ./spa/importmap.json && echo && \
     for dir in ./spa/madiro-*; do \

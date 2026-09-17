@@ -38,11 +38,11 @@
     "url": "https://github.com/MadiroGlobalHealth/openmrs-esm-lime/issues"
   },
   "dependencies": {
-    "@carbon/react": "^1.83.0",
     "lodash-es": "^4.17.15",
     "yup": "^0.32.11"
   },
   "peerDependencies": {
+    "@carbon/react": "1.x",
     "@openmrs/esm-framework": "10.x",
     "react": "18.x",
     "react-i18next": "16.x",
@@ -50,6 +50,7 @@
     "swr": "2.x"
   },
   "devDependencies": {
+    "@carbon/react": "^1.92.1",
     "openmrs": "next"
   }
 }
