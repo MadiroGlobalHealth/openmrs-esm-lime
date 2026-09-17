@@ -38,12 +38,12 @@
     "url": "https://github.com/MadiroGlobalHealth/openmrs-esm-lime/issues"
   },
   "dependencies": {
-    "@carbon/react": "^1.83.0",
-    "@openmrs/esm-form-engine-lib": "^4.2.1",
+    "@openmrs/esm-form-engine-lib": "^4.2.2-pre.2580",
     "lodash-es": "^4.17.15",
     "yup": "^0.32.11"
   },
   "peerDependencies": {
+    "@carbon/react": "1.x",
     "@openmrs/esm-framework": "10.x",
     "@openmrs/esm-patient-common-lib": "12.x",
     "dayjs": "1.x",
@@ -53,6 +53,7 @@
     "swr": "2.x"
   },
   "devDependencies": {
+    "@carbon/react": "^1.92.1",
     "openmrs": "next"
   }
 }
