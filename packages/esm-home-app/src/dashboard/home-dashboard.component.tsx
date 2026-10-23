@@ -1,13 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import {
-  useLayoutType,
-  isDesktop,
-  useAssignedExtensions,
-  ExtensionSlot,
-  WorkspaceContainer,
-  useConfig,
-} from '@openmrs/esm-framework';
+import { useLayoutType, isDesktop, useAssignedExtensions, ExtensionSlot, useConfig } from '@openmrs/esm-framework';
 import type { DashboardConfig } from '../types/index';
 import DashboardView from './dashboard-view.component';
 import styles from './home-dashboard.scss';
@@ -35,7 +28,6 @@ export default function HomeDashboard() {
         {isDesktop(layout) && <ExtensionSlot name="home-sidebar-slot" key={layout} />}
         <DashboardView title={activeDashboard?.name} dashboardSlot={activeDashboard?.slot} />
       </section>
-      <WorkspaceContainer overlay contextKey="home" />
     </div>
   );
 }
