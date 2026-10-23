@@ -8,6 +8,8 @@ on:
   release:
     types:
       - created
+  # Manual runs publish a pre-release from the chosen branch (used to test publishing).
+  workflow_dispatch:
 
 env:
   TURBO_API: 'http://127.0.0.1:9080'
@@ -64,7 +66,13 @@ jobs:
 
     needs: build
 
-    if: ${{ github.event_name == 'push' }}
+    if: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}
+
+    # npm trusted publishing: Yarn exchanges the GitHub OIDC token for a
+    # short-lived publish token, so no NPM_AUTH_TOKEN secret is needed.
+    permissions:
+      contents: read
+      id-token: write
 
     steps:
       - uses: actions/checkout@v4
@@ -72,7 +80,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "22.x"
-          registry-url: "https://registry.npmjs.org"
 
       - name: Cache dependencies
         id: cache
@@ -95,9 +102,7 @@ jobs:
       - run: git add . && git commit -m "Prerelease version" --no-verify
 
       - name: Pre-release
-        run: yarn config set npmAuthToken "${NODE_AUTH_TOKEN}" && yarn run ci:prepublish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+        run: yarn run ci:prepublish
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
@@ -114,13 +119,16 @@ jobs:
 
     if: ${{ github.event_name == 'release' }}
 
+    permissions:
+      contents: read
+      id-token: write
+
     steps:
       - uses: actions/checkout@v4
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "22.x"
-          registry-url: "https://registry.npmjs.org"
 
       - name: Cache dependencies
         id: cache
@@ -134,6 +142,4 @@ jobs:
         run: yarn install --immutable
 
       - run: yarn turbo run build --color
-      - run: yarn config set npmAuthToken "${NODE_AUTH_TOKEN}" && yarn run ci:publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+      - run: yarn run ci:publish
