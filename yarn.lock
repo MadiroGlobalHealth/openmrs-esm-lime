@@ -1699,6 +1699,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@madiro/esm-mental-health-app@workspace:packages/esm-mental-health-app"
   dependencies:
+    "@carbon/react": "npm:^1.92.1"
+    "@openmrs/esm-form-engine-lib": "npm:next"
     lodash-es: "npm:^4.17.15"
     openmrs: "npm:next"
     yup: "npm:^0.32.11"
@@ -1716,6 +1718,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@madiro/esm-nutrition-app@workspace:packages/esm-nutrition-app"
   dependencies:
+    "@carbon/react": "npm:^1.92.1"
+    "@openmrs/esm-form-engine-lib": "npm:next"
     lodash-es: "npm:^4.17.15"
     openmrs: "npm:next"
     yup: "npm:^0.32.11"
