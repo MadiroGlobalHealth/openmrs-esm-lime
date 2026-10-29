@@ -1,6 +1,6 @@
 {
   "name": "@madiro/openmrs-esm-lime",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "private": true,
   "description": "LIME EMR microfrontends for the OpenMRS 3.x",
   "workspaces": [
